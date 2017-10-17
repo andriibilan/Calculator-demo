@@ -10,11 +10,18 @@ import UIKit
 
 class OutputViewController: UIViewController, OutputInterface {
     func display(_ result: String){
-        Label.text = result
+        if Label.text == "0" {
+            Label.text = result
+        } else {
+            Label.text = Label.text! + "\(result)"
+        }
     }
     
+    
+    
     @IBOutlet weak var Label: UILabel!
-   
+    
+    
     
     
     override func viewDidLoad() {

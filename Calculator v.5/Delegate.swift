@@ -6,8 +6,18 @@
 //  Copyright © 2017 andriibilan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-protocol InputInterface : class {
+protocol InputInterface {
     func symbolPressed(_ symbol: String)
 }
+
+protocol InputInterfaceDelegate {
+    func digitPressed(_ value: Double)
+    func operationPressed(_ operation: Operation)
+    func functionPressed(_ function: Function)
+    func utilityPressed(_ utility: Utility)
+    func display(_ symbol: String)
+}
+
+
