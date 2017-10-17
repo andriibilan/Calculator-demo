@@ -11,11 +11,38 @@ import UIKit
 class InputViewController: UIViewController, InputInterface {
     var delegate: InputInterfaceDelegate?
     
-
+    @IBOutlet weak var clearButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.Tap))//Tap function will call when user tap on button
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.Long)) //Long function will call when user long press on button.
+        tapGesture.numberOfTapsRequired = 1
+       self.clearButton?.addGestureRecognizer(tapGesture)
+       self.clearButton?.addGestureRecognizer(longGesture)
+    }
+    
+    @objc func Tap() {
+        
+        print("allax acbar")
+    }
+    
+    @objc func Long() {
+        
+        print("Long press")
+    }
+        // Do any additional setup after loading the view, typically from a nib.l
+    func playClick() {
+        AudioServicesPlaySystemSound(1106)
+    }
+    
+    
     func symbolPressed(_ symbol: String) {
         switch symbol {
         case "=" :
-            delegate?.operationPressed(.equal)
+            delegate?.utilityPressed(.equal)
         case  "+" :
             delegate?.operationPressed(.plus)
         case "-" :
@@ -28,6 +55,32 @@ class InputViewController: UIViewController, InputInterface {
             delegate?.operationPressed(.exp)
         case "%" :
             delegate?.operationPressed(.percent)
+        case "(" :
+            delegate?.utilityPressed(.leftBracket)
+        case ")":
+            delegate?.utilityPressed(.rightBracket)
+        case "tan" :
+            delegate?.functionPressed(.tan)
+        case "sin" :
+            delegate?.functionPressed(.sin)
+        case "cos" :
+            delegate?.functionPressed(.cos)
+        case "√" :
+            delegate?.functionPressed(.sqrt)
+        case "ln" :
+            delegate?.functionPressed(.ln)
+        case "lg" :
+            delegate?.functionPressed(.lg)
+        case "x!" :
+            delegate?.functionPressed(.fact)
+        case "+/-" :
+            delegate?.functionPressed(.sign)
+        case "snh" :
+            delegate?.functionPressed(.sinh)
+        case "cosh" :
+            delegate?.functionPressed(.cosh)
+        case "tanh" :
+            delegate?.functionPressed(.tanh)
         
         default:
             delegate?.display(symbol)
@@ -37,20 +90,19 @@ class InputViewController: UIViewController, InputInterface {
     
     @IBAction func symbolPressed(_ sender: UIButton) {
         symbolPressed(sender.currentTitle!)
-        func playClick() {
-            AudioServicesPlaySystemSound(1104)
-        }
+        playClick()
         
     }
+    
+  
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InputViewController{
             destination.delegate = delegate
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.l
-    }
+
     
     
     override func didReceiveMemoryWarning() {

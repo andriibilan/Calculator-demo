@@ -61,6 +61,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         calc.resultClosure = { (value, eror) ->() in
                if (value != nil) {
                     self.calc.opertString = "\(value!)"
+                self.ifDouble(value!)
                }           }
 
     }
@@ -69,11 +70,11 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         let r  = val - (Double)(value)
         if r == 0 {
             let operation = (String)(value)
-            //      outputController?.cleanLabel()
+                 outputController?.cleanLabel()
             outputController?.display(operation)
         } else {
             let operation = (String)(val)
-            //     outputController?.cleanLabel()
+              outputController?.cleanLabel()
             outputController?.display(operation)
        }
    }

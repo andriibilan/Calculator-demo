@@ -339,7 +339,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab9-mN-sV7">
                                                 <rect key="frame" x="274.5" y="0.0" width="76.5" height="52"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                                <state key="normal" title="AC">
+                                                <state key="normal" title="C">
                                                     <color key="titleColor" red="0.63528139839999997" green="0.051887926709999997" blue="0.004258027797" alpha="0.89380886130000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="titleShadowColor" red="0.56285533440000002" green="0.36952506730000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -392,6 +392,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="clearButton" destination="ab9-mN-sV7" id="CB4-xx-Iux"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BT2-UA-RlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -443,7 +446,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZT-Sj-Yl4">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="61.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <state key="normal" title="log"/>
+                                                <state key="normal" title="lg"/>
                                                 <connections>
                                                     <action selector="symbolPressed:" destination="AWF-PW-gdL" eventType="touchUpInside" id="wPd-2i-cQ3"/>
                                                 </connections>
@@ -451,7 +454,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ws-rv-vsv">
                                                 <rect key="frame" x="100" y="0.0" width="100" height="61.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <state key="normal" title="sinh"/>
+                                                <state key="normal" title="snh"/>
                                                 <connections>
                                                     <action selector="symbolPressed:" destination="AWF-PW-gdL" eventType="touchUpInside" id="DEz-2j-WjD"/>
                                                 </connections>

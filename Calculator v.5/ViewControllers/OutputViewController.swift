@@ -9,6 +9,10 @@
 import UIKit
 
 class OutputViewController: UIViewController, OutputInterface {
+    
+    func cleanLabel() {
+        Label.text = "0"
+    }
     func display(_ result: String){
         if Label.text == "0" {
             Label.text = result

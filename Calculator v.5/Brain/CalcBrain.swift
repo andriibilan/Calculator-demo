@@ -16,10 +16,9 @@ import Foundation
 enum Operation: String {
     case plus  = "+"
     case minus = "-"
-    case mult  = "x"
+    case mult  = "×"
     case div   = "÷"
     case exp   = "^"
-    case equal = "="
     case percent = "%"
 }
 
@@ -28,12 +27,11 @@ enum Function: String {
     case sin     = "sin"
     case cos     = "cos"
     case tan     = "tan"
-    case sinh    = "sinh"
+    case sinh    = "snh"
     case cosh    = "cosh"
     case tanh    = "tanh"
     case ln      = "ln"
     case lg      = "lg"
-    case log     = "log"
     case fact    = "x!"
     case sign    = "+/-"
 }
@@ -50,6 +48,7 @@ enum Utility: String {
     case dot          = "."
     case leftBracket  = "("
     case rightBracket = ")"
+    case equal = "="
 }
 
 enum Constants: String {
@@ -58,6 +57,7 @@ enum Constants: String {
 }
 protocol OutputInterface {
     func display(_ result: String)
+    func cleanLabel()
 }
 
     protocol CalculatorInterface {
@@ -72,7 +72,7 @@ protocol OutputInterface {
 
 class CalcBrain : CalculatorInterface {
     var resultClosure: ((Double?, Error?) -> ())?
-    var opertString = ""
+    var opertString: String = ""
     private var openBrackets = 0
    static let shared = CalcBrain()
     private var inputDataArray = [String]()
@@ -85,11 +85,11 @@ class CalcBrain : CalculatorInterface {
     
     func operation(_ operation: Operation) {
         if operation == .plus {
-           if opertString == "0" || opertString == "" || ( opertString.characters.count == 1 && opertString.characters.last == "-" ){
+           if opertString == nil || opertString == "0" || opertString == "" || ( opertString.characters.count == 1 && opertString.characters.last == "-" ){
                 opertString = "+"
            }
             else if (opertString.characters.last == ")" || opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == "."{
-                opertString = opertString + " +"
+                opertString = opertString + "+"
             }else if opertString.characters.last != "("{
                 opertString.characters.removeLast()
                 opertString = opertString + "+"
@@ -98,7 +98,7 @@ class CalcBrain : CalculatorInterface {
             if opertString == "0" || opertString == "" || ( opertString.characters.count == 1 && opertString.characters.last == "+" ){
                 opertString = "-"
             }else if (opertString.characters.last == ")" || opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == "."{
-                opertString = opertString + " -"
+                opertString = opertString + "-"
             }else if opertString.characters.last != "("{
                 opertString.characters.removeLast()
                 opertString = opertString + "-"
@@ -106,7 +106,7 @@ class CalcBrain : CalculatorInterface {
         }else if operation == .mult{
             if  opertString.characters.count > 0 {
                 if (opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == ")" || opertString.characters.last! == "."{
-                    opertString = opertString + " ×"
+                    opertString = opertString + "×"
                 }else if opertString.characters.last != "(" && opertString != "+" && opertString != "-"{
                     opertString.removeLast()
                     opertString = opertString + "×"
@@ -115,7 +115,7 @@ class CalcBrain : CalculatorInterface {
         } else if operation == .div{
             if  opertString.characters.count > 0 {
                 if (opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == ")" || opertString.characters.last! == "."{
-                    opertString = opertString + " ÷"
+                    opertString = opertString + "÷"
                 }else if opertString.characters.last != "(" && opertString != "+" && opertString != "-"{
                     opertString.removeLast()
                     opertString = opertString + "÷"
@@ -124,7 +124,7 @@ class CalcBrain : CalculatorInterface {
         } else if operation == .exp{
             if opertString.characters.count > 0 {
                 if (opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == ")" || opertString.characters.last! == "."{
-                    opertString = opertString + " ^"
+                    opertString = opertString + "^"
                 } else if opertString.characters.last != "(" && opertString != "+" && opertString != "-"{
                     opertString.removeLast()
                     opertString = opertString + "^"
@@ -132,20 +132,101 @@ class CalcBrain : CalculatorInterface {
                 
             }
         }
-        else if operation == .equal  {
-            if ( opertString != "0" && opertString != "") && ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == ")"{
-                resultClosure?(CalculateRPN(),nil)
-                inputDataArray = [String]()
-                outputData = [String]()
-            }
-        
-        }
+
     }
     
 
     func function(_ function: Function) {
+        if function == .sin {
+            if opertString == "0" || opertString == ""{
+                opertString = "sin"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×sin"
+            }else {
+                opertString = opertString + "sin"
+            }
+        }else if function == .cos {
+            if opertString == "0" || opertString == ""{
+                opertString = "cos"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×cos"
+            }else {
+                opertString = opertString + "cos"
+            }
+        }else if function == .tan {
+             if opertString == "0" || opertString == ""{
+                opertString = "tan"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×tan"
+            }else {
+                opertString = opertString + "tan"
+            }
+        } else if  function == .cosh {
+            if opertString == "0" || opertString == ""{
+                opertString = "cosh"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×cosh"
+            }else {
+                opertString = opertString + "cosh"
+            }
+        }else if function == .tanh {
+            if opertString == "0" || opertString == ""{
+                opertString = "tanh"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×tanh"
+            }else {
+                opertString = opertString + "tanh"
+            }
+        }else if function == .sinh{
+            if opertString == "0" || opertString == ""{
+                opertString = "snh"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×snh"
+            }else {
+                opertString = opertString + "snh"
+            }
+        }else if function == .sqrt {
+            if opertString == "0" || opertString == ""{
+                opertString = "√"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×√"
+            }else {
+                opertString = opertString + "√"
+            }
+        }else if function == .ln {
+            if opertString == "0" || opertString == ""{
+                opertString = "ln"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×ln"
+            }else {
+                opertString = opertString + "ln"
+            }
+        }else if function == .lg {
+            if opertString == "0" || opertString == ""{
+                opertString = "lg"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×lg"
+            }else {
+                opertString = opertString + "lg"
+            }
+        }else if function == .sign {
+            if opertString == "0"{
+               opertString = "-0"
+            }
+            if opertString.hasPrefix("-") {
+                opertString.removeFirst()
+            }
+
+        }
         
-    }
+        
+        
+        
+            
+            
+        }
+   
+
     
     func memory(_ memory: Memory) {
         
@@ -166,7 +247,7 @@ class CalcBrain : CalculatorInterface {
             if opertString  == "0" || opertString == "" {
                 opertString = "("
             }else if opertString.characters.last! >= "0" && opertString.characters.last! <= "9" || opertString.characters.last! == ")" {
-                opertString = opertString + " × ( "
+                opertString = opertString + "×("
             } else {
                 opertString = opertString + " ("
             }
@@ -179,11 +260,18 @@ class CalcBrain : CalculatorInterface {
                 }
             }
             
+        }        else if utility == .equal  {
+            if ( opertString != "0" && opertString != "") && ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == ")"{
+                resultClosure?(CalculateRPN(),nil)
+                inputDataArray = [String]()
+                outputData = [String]()
+            }
+            
         }
     }
     
     private func seperateInputData(){ //function seperate inputData into math components
-        print(opertString)
+        print("open separetadata string: \(opertString)")
         var l = true
         for ch in opertString.characters {
             if ch == "-" && l == true{
@@ -211,7 +299,7 @@ class CalcBrain : CalculatorInterface {
                 inputDataArray.append(String(charachter))
             }
         }
-        print(inputDataArray)
+        print(" close separedata: \(inputDataArray)")
     }
 
     private func calculateData(){  //calculate reverse polish notation
@@ -252,14 +340,14 @@ class CalcBrain : CalculatorInterface {
             } else {
                 stack.append(String(symbol))
             }
-            print(outputData)
-            print(stack)
+            print("close calcdata:  \(outputData)")
+            print("print stack calcdata:  \(stack)")
 
         }
         for element in stack.reversed() {
             outputData.append(String(element))
         }
-        print(outputData)
+        print("reversed outputdata calcdata:  \(outputData)")
 
     }
     private func priorityFor(char:String) -> Int{ //determine priority
@@ -296,7 +384,7 @@ class CalcBrain : CalculatorInterface {
     }
 
     private func isTrigonomenry(at char: String) -> Bool{ //determine if trigonometry func
-        if char=="sin" || char=="cos" || char=="tg" || char=="ctg" {
+        if char == "sin" || char == "cos" || char == "tan" || char == "snh" || char == "cosh" || char == "tanh" {
             return true
         }
         return false
@@ -304,7 +392,7 @@ class CalcBrain : CalculatorInterface {
 
     private func isOperationDM(at char: String) -> Bool{ //determine if math operator
 
-        if char=="+" || char=="/" || char == "*" || char=="-" || char == "^" || char == "sin" || char == "cos" || char == "tg" || char == "ctg" {
+        if char == "+" || char == "÷" || char == "×" || char == "-" || char == "^" || char == "sin" || char == "cos" || char == "tan" || char == "snh" || char == "cosh" || char == "tanh" {
             return true
         }
         return false
@@ -323,11 +411,11 @@ class CalcBrain : CalculatorInterface {
                 let rightValue = stack.removeLast()
                 let leftValue = stack.removeLast()
                 stack.append(leftValue - rightValue)
-            case "*":
+            case "×":
                 let rightValue = stack.removeLast()
                 let leftValue = stack.removeLast()
                 stack.append(leftValue * rightValue)
-            case "/":
+            case "÷":
                 let rightValue = stack.removeLast()
                 let leftValue = stack.removeLast()
                 stack.append(leftValue / rightValue)
@@ -341,18 +429,24 @@ class CalcBrain : CalculatorInterface {
             case "cos":
                 let value = stack.removeLast()
                 stack.append(cos(value))
-            case "tg":
+            case "tan":
                 let value = stack.removeLast()
                 stack.append(tan(value))
-            case "ctg":
+            case "snh":
                 let value = stack.removeLast()
-                stack.append(1/tan(value))
+                stack.append(sinh(value))
+            case "cosh":
+                let value = stack.removeLast()
+                stack.append(cosh(value))
+            case "tanh":
+                let value = stack.removeLast()
+                stack.append(tanh(value))
 
 
             default:
                 stack.append( Double(value)!)
             }
-            print(stack)
+            print("print stack after RPN:  \(stack)")
         }
         return stack[stack.count-1]
     }
