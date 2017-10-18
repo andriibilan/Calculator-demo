@@ -393,7 +393,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="clearButton" destination="ab9-mN-sV7" id="CB4-xx-Iux"/>
+                        <outlet property="clearButton" destination="ab9-mN-sV7" id="sdQ-bL-vwz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BT2-UA-RlU" userLabel="First Responder" sceneMemberID="firstResponder"/>

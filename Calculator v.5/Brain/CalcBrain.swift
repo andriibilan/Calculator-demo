@@ -36,8 +36,10 @@ enum Function: String {
     case sign    = "+/-"
 }
 
-
-
+enum Memory: String {
+//    case allclean   = "AC"
+    case allClean        = "C"
+}
 enum Utility: String {
     case dot          = "."
     case leftBracket  = "("
@@ -60,11 +62,14 @@ protocol OutputInterface {
         func function(_ function: Function)
         func utility(_ utility: Utility)
         func constants(_ constant: Constants)
+        func allClean (_ cleen: Memory)
         var resultClosure: ((Double?, Error?) -> ())? { get set }
     }
 
 
 class CalcBrain : CalculatorInterface {
+ 
+    
     
     
     var resultClosure: ((Double?, Error?) -> ())?
@@ -77,11 +82,18 @@ class CalcBrain : CalculatorInterface {
     func digit(_ value: Double) {
         opertString = opertString + (String)(value)
     }
-    
-    
+
+    func allClean(_ cleen: Memory) {
+        if cleen == .allClean{
+            if opertString != "" {
+                opertString.removeAll()
+
+            }
+        }
+    }
     func operation(_ operation: Operation) {
         if operation == .plus {
-           if opertString == nil || opertString == "0" || opertString == "" || ( opertString.characters.count == 1 && opertString.characters.last == "-" ){
+           if  opertString == "0" || opertString == "" || ( opertString.characters.count == 1 && opertString.characters.last == "-" ){
                 opertString = "+"
            }
             else if (opertString.characters.last == ")" || opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == "."{
@@ -130,8 +142,7 @@ class CalcBrain : CalculatorInterface {
         }
 
     }
-    
-
+  
     func function(_ function: Function) {
         if function == .sin {
             if opertString == "0" || opertString == ""{
@@ -296,6 +307,7 @@ class CalcBrain : CalculatorInterface {
         }
     }
     
+  
     private func seperateInputData(){ //function seperate inputData into math components
         print("open separetadata string: \(opertString)")
         var l = true

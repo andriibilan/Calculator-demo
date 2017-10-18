@@ -18,6 +18,7 @@ protocol InputInterfaceDelegate {
     func functionPressed(_ function: Function)
     func utilityPressed(_ utility: Utility)
     func constantPressed(_ const: Constants)
+    func allClean (_ clean: Memory)
     func display(_ symbol: String)
 }
 

@@ -10,20 +10,22 @@ import UIKit
 
 class ViewController: UIViewController, InputInterfaceDelegate {
 
-    
     var outputController : OutputInterface? = nil
     private  var calc = CalcBrain()
+    
+
+    func allClean(_ clean: Memory) {
+        calc.allClean(.allClean)
+        outputController?.cleanLabel()
+    }
+    
     
     
     func display(_ symbol: String) {
         calc.opertString +=   symbol
         outputController?.display(symbol)
-        
     }
-    
-
-    
-    
+ 
     func digitPressed(_ value: Double) {
         calc.digit(value)
         let operation = (String)(value)
@@ -70,6 +72,8 @@ class ViewController: UIViewController, InputInterfaceDelegate {
                }           }
 
     }
+ 
+    
     func ifDouble(_ val: Double){ //verifing Double or Int
         let value = (Int)(val)
         let r  = val - (Double)(value)
@@ -89,9 +93,9 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+
 }
-
-
     
     
 

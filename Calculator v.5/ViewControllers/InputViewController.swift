@@ -10,29 +10,30 @@ import UIKit
 
 class InputViewController: UIViewController, InputInterface {
     var delegate: InputInterfaceDelegate?
-    
+
     @IBOutlet weak var clearButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+  
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.clear))//Tap function will call when user tap on button
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.allClear)) //Long function will call when user long press on button.
         tapGesture.numberOfTapsRequired = 1
-       self.clearButton?.addGestureRecognizer(tapGesture)
-       self.clearButton?.addGestureRecognizer(longGesture)
+        self.clearButton?.addGestureRecognizer(tapGesture)
+        self.clearButton?.addGestureRecognizer(longGesture)
+    
+    }
+  @objc func clear() {
+ 
+        
+        
+     }
+@objc func allClear() {
+      delegate?.allClean(.allClean)
     }
     
-    @objc func clear() {
-        
-        print("tap press")
-    }
-    
-    @objc func allClear() {
-        
-        print("Long press")
-    }
+
         // Do any additional setup after loading the view, typically from a nib.l
     func playClick() {
         AudioServicesPlaySystemSound(1106)
