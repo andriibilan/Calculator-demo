@@ -17,19 +17,19 @@ class InputViewController: UIViewController, InputInterface {
         super.viewDidLoad()
         
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.Tap))//Tap function will call when user tap on button
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.Long)) //Long function will call when user long press on button.
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.clear))//Tap function will call when user tap on button
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.allClear)) //Long function will call when user long press on button.
         tapGesture.numberOfTapsRequired = 1
        self.clearButton?.addGestureRecognizer(tapGesture)
        self.clearButton?.addGestureRecognizer(longGesture)
     }
     
-    @objc func Tap() {
+    @objc func clear() {
         
-        print("allax acbar")
+        print("tap press")
     }
     
-    @objc func Long() {
+    @objc func allClear() {
         
         print("Long press")
     }
@@ -81,6 +81,10 @@ class InputViewController: UIViewController, InputInterface {
             delegate?.functionPressed(.cosh)
         case "tanh" :
             delegate?.functionPressed(.tanh)
+        case "𝝿" :
+            delegate?.constantPressed(.pi)
+        case "e" :
+            delegate?.constantPressed(.e)
         
         default:
             delegate?.display(symbol)

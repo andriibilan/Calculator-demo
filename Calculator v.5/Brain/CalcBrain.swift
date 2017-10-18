@@ -36,13 +36,7 @@ enum Function: String {
     case sign    = "+/-"
 }
 
-enum Memory: String {
-    case memoryClean  = "mc"
-    case memoryAdd    = "m+"
-    case memoryRemove = "m-"
-    case clean        = "C"
-    case allClean     = "AC"
-}
+
 
 enum Utility: String {
     case dot          = "."
@@ -52,7 +46,7 @@ enum Utility: String {
 }
 
 enum Constants: String {
-    case pi = "π"
+    case pi = "𝝿"
     case e  = "e"
 }
 protocol OutputInterface {
@@ -64,13 +58,15 @@ protocol OutputInterface {
         func digit(_ value: Double)
         func operation(_ operation: Operation)
         func function(_ function: Function)
-        func memory(_ memory: Memory)
         func utility(_ utility: Utility)
+        func constants(_ constant: Constants)
         var resultClosure: ((Double?, Error?) -> ())? { get set }
     }
 
 
 class CalcBrain : CalculatorInterface {
+    
+    
     var resultClosure: ((Double?, Error?) -> ())?
     var opertString: String = ""
     private var openBrackets = 0
@@ -217,7 +213,16 @@ class CalcBrain : CalculatorInterface {
                 opertString.removeFirst()
             }
 
+        }else if function == .sqrt {
+            if opertString == "0" || opertString == ""{
+                opertString = "√"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
+                opertString = opertString + "×√"
+            }else {
+                opertString = opertString + "√"
+            }
         }
+        
         
         
         
@@ -226,11 +231,32 @@ class CalcBrain : CalculatorInterface {
             
         }
    
-
-    
-    func memory(_ memory: Memory) {
+    func constants(_ constant: Constants) {
+        if constant == .e {
+            if opertString  == "0" || opertString == ""{
+                opertString += "\(M_E)"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9"){
+                opertString += "×\(M_E)"
+            } else if ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || ( opertString.characters.count == 1 && opertString.characters.last == "-"){
+                opertString += "\(M_E)"
+            } else {
+                opertString += "\(M_E)"
+            }
+        }else if constant == .pi {
+            if opertString  == "0" || opertString == ""{
+                opertString += "\(Double.pi)"
+            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9"){
+                opertString += "×\(Double.pi)"
+            } else if ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || ( opertString.characters.count == 1 && opertString.characters.last == "-"){
+                opertString += "\(Double.pi)"
+            } else {
+                opertString += "\(Double.pi)"
+            }
+        }
         
     }
+    
+
     
     func utility(_ utility: Utility) {
         if utility == .dot {
@@ -260,7 +286,7 @@ class CalcBrain : CalculatorInterface {
                 }
             }
             
-        }        else if utility == .equal  {
+        }else if utility == .equal  {
             if ( opertString != "0" && opertString != "") && ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") || opertString.characters.last == ")"{
                 resultClosure?(CalculateRPN(),nil)
                 inputDataArray = [String]()
@@ -351,11 +377,11 @@ class CalcBrain : CalculatorInterface {
 
     }
     private func priorityFor(char:String) -> Int{ //determine priority
-        if char == "+" || char == "-" {
+        if char == "+" || char == "-" || char == "𝝿" || char == "e"{
             return 1
         } else if (char == "^") {
             return 3
-        } else if isTrigonomenry(at: char) {
+        } else if isTrigonomenry(at: char)  {
             return 4
         }
         return 2
@@ -384,7 +410,7 @@ class CalcBrain : CalculatorInterface {
     }
 
     private func isTrigonomenry(at char: String) -> Bool{ //determine if trigonometry func
-        if char == "sin" || char == "cos" || char == "tan" || char == "snh" || char == "cosh" || char == "tanh" {
+        if char == "sin" || char == "cosh"  || char == "cos" || char == "tan" || char == "snh" || char == "cosh" || char == "tanh" || char == "√"  {
             return true
         }
         return false
@@ -392,7 +418,7 @@ class CalcBrain : CalculatorInterface {
 
     private func isOperationDM(at char: String) -> Bool{ //determine if math operator
 
-        if char == "+" || char == "÷" || char == "×" || char == "-" || char == "^" || char == "sin" || char == "cos" || char == "tan" || char == "snh" || char == "cosh" || char == "tanh" {
+        if char == "+" || char == "÷" || char == "𝝿" || char == "e" || char == "×" || char == "-" || char == "^" || char == "cosh" || char == "√" || char == "sin" || char == "cos" || char == "tan" || char == "snh" ||  char == "tanh" {
             return true
         }
         return false
@@ -423,6 +449,12 @@ class CalcBrain : CalculatorInterface {
                 let rightValue = stack.removeLast()
                 let leftValue = stack.removeLast()
                 stack.append(pow(leftValue, rightValue))
+            case "√":
+                let value = stack.removeLast()
+                stack.append(sqrt(value))
+            case "cosh":
+                let value = stack.removeLast()
+                stack.append(cosh(value))
             case "sin":
                 let value = stack.removeLast()
                 stack.append(sin(value))
@@ -435,13 +467,13 @@ class CalcBrain : CalculatorInterface {
             case "snh":
                 let value = stack.removeLast()
                 stack.append(sinh(value))
-            case "cosh":
-                let value = stack.removeLast()
-                stack.append(cosh(value))
+
             case "tanh":
                 let value = stack.removeLast()
                 stack.append(tanh(value))
-
+            case "𝝿":
+                let _ = stack.removeLast()
+                stack.append(Double.pi)
 
             default:
                 stack.append( Double(value)!)

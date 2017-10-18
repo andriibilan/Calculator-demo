@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, InputInterfaceDelegate {
+
+    
     var outputController : OutputInterface? = nil
     private  var calc = CalcBrain()
     
@@ -39,7 +41,10 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         calc.utility(utility)
         outputController?.display(utility.rawValue)
     }
-    
+    func constantPressed(_ const: Constants) {
+        calc.constants(const)
+        outputController?.display(const.rawValue)
+    }
 
 
 
