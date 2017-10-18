@@ -10,7 +10,7 @@ import UIKit
 
 class InputViewController: UIViewController, InputInterface {
     var delegate: InputInterfaceDelegate?
-
+  private  var calcInput = CalcBrain()
     @IBOutlet weak var clearButton: UIButton!
     
     
@@ -25,7 +25,7 @@ class InputViewController: UIViewController, InputInterface {
     
     }
   @objc func clear() {
- 
+delegate?.clear(.clear)
         
         
      }

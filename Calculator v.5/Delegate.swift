@@ -20,6 +20,7 @@ protocol InputInterfaceDelegate {
     func constantPressed(_ const: Constants)
     func allClean (_ clean: Memory)
     func display(_ symbol: String)
+    func clear (_ clean: Memory)
 }
 
 

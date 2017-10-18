@@ -9,17 +9,21 @@
 import UIKit
 
 class ViewController: UIViewController, InputInterfaceDelegate {
-
+    
     var outputController : OutputInterface? = nil
     private  var calc = CalcBrain()
-    
+   
+    func clear(_ clean: Memory) {
+        let clearedString = calc.clear(.clear)
+      outputController?.clearDisplay(clearedString)
+        
+    }
 
     func allClean(_ clean: Memory) {
         calc.allClean(.allClean)
         outputController?.cleanLabel()
     }
-    
-    
+
     
     func display(_ symbol: String) {
         calc.opertString +=   symbol
@@ -31,9 +35,10 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         let operation = (String)(value)
         outputController?.display(operation)
     }
-    func operationPressed(_ operation: Operation) {
+    func operationPressed(_ operation: Operation){
         calc.operation(operation)
         outputController?.display(operation.rawValue)
+
     }
     func functionPressed(_ function: Function) {
         calc.function(function)
@@ -81,12 +86,13 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             let operation = (String)(value)
                  outputController?.cleanLabel()
             outputController?.display(operation)
-        } else {
+            outputController?.clearDisplay(operation)
+        } else  {
             let operation = (String)(val)
               outputController?.cleanLabel()
             outputController?.display(operation)
-       }
-   }
+            outputController?.clearDisplay(operation)
+        }   }
     // Do any additional setup after loading the view, typically from a nib.
 
     override func didReceiveMemoryWarning() {
@@ -98,5 +104,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
 }
     
     
+
+
 
 

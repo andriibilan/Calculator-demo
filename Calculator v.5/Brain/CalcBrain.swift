@@ -37,9 +37,10 @@ enum Function: String {
 }
 
 enum Memory: String {
-//    case allclean   = "AC"
     case allClean        = "C"
+    case clear 
 }
+
 enum Utility: String {
     case dot          = "."
     case leftBracket  = "("
@@ -54,6 +55,7 @@ enum Constants: String {
 protocol OutputInterface {
     func display(_ result: String)
     func cleanLabel()
+    func clearDisplay(_ resultAfterClear: String)
 }
 
     protocol CalculatorInterface {
@@ -68,14 +70,10 @@ protocol OutputInterface {
 
 
 class CalcBrain : CalculatorInterface {
- 
-    
-    
-    
     var resultClosure: ((Double?, Error?) -> ())?
     var opertString: String = ""
     private var openBrackets = 0
-   static let shared = CalcBrain()
+  static  let shared = CalcBrain()
     private var inputDataArray = [String]()
     private var outputData = [String]()
     
@@ -87,10 +85,25 @@ class CalcBrain : CalculatorInterface {
         if cleen == .allClean{
             if opertString != "" {
                 opertString.removeAll()
-
+                
             }
         }
     }
+    
+    func clear (_ clean: Memory) -> String {
+        var updatedString = ""
+        
+        if clean == .clear {
+        if opertString != "" {
+            opertString.removeLast()
+            updatedString = opertString
+        } else{
+            print("empty String")
+        }
+    }
+        return updatedString
+    }
+    
     func operation(_ operation: Operation) {
         if operation == .plus {
            if  opertString == "0" || opertString == "" || ( opertString.characters.count == 1 && opertString.characters.last == "-" ){
@@ -140,7 +153,6 @@ class CalcBrain : CalculatorInterface {
                 
             }
         }
-
     }
   
     func function(_ function: Function) {
@@ -464,6 +476,12 @@ class CalcBrain : CalculatorInterface {
             case "√":
                 let value = stack.removeLast()
                 stack.append(sqrt(value))
+            case "lg":
+                let value = stack.removeLast()
+                stack.append(log10(value))
+            case "ln":
+                let value = stack.removeLast()
+                stack.append(logb(value))
             case "cosh":
                 let value = stack.removeLast()
                 stack.append(cosh(value))
@@ -479,7 +497,6 @@ class CalcBrain : CalculatorInterface {
             case "snh":
                 let value = stack.removeLast()
                 stack.append(sinh(value))
-
             case "tanh":
                 let value = stack.removeLast()
                 stack.append(tanh(value))
