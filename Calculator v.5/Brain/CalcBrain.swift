@@ -27,13 +27,13 @@ enum Function: String {
     case sin     = "sin"
     case cos     = "cos"
     case tan     = "tan"
-    case sinh    = "snh"
+    case sinh    = "sinh"
     case cosh    = "cosh"
     case tanh    = "tanh"
     case ln      = "ln"
     case lg      = "lg"
     case fact    = "x!"
-    case sign    = "+/-"
+    case sign
 }
 
 enum Memory: String {
@@ -45,7 +45,7 @@ enum Utility: String {
     case dot          = "."
     case leftBracket  = "("
     case rightBracket = ")"
-    case equal = "="
+    case equal = ""
 }
 
 enum Constants: String {
@@ -56,6 +56,7 @@ protocol OutputInterface {
     func display(_ result: String)
     func cleanLabel()
     func clearDisplay(_ resultAfterClear: String)
+     func viewInDisplay() ->String?
 }
 
     protocol CalculatorInterface {
@@ -198,11 +199,11 @@ class CalcBrain : CalculatorInterface {
             }
         }else if function == .sinh{
             if opertString == "0" || opertString == ""{
-                opertString = "snh"
+                opertString = "sinh"
             }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
-                opertString = opertString + "×snh"
+                opertString = opertString + "×sinh"
             }else {
-                opertString = opertString + "snh"
+                opertString = opertString + "sinh"
             }
         }else if function == .sqrt {
             if opertString == "0" || opertString == ""{
@@ -229,21 +230,13 @@ class CalcBrain : CalculatorInterface {
                 opertString = opertString + "lg"
             }
         }else if function == .sign {
-            if opertString == "0"{
-               opertString = "-0"
+            if opertString == "0" || opertString == ""{
+               opertString = "-"
             }
             if opertString.hasPrefix("-") {
                 opertString.removeFirst()
             }
 
-        }else if function == .sqrt {
-            if opertString == "0" || opertString == ""{
-                opertString = "√"
-            }else if opertString.characters.last! == ")" || ( opertString.characters.last! >= "0" && opertString.characters.last! <= "9") {
-                opertString = opertString + "×√"
-            }else {
-                opertString = opertString + "√"
-            }
         }
         
         
@@ -343,14 +336,24 @@ class CalcBrain : CalculatorInterface {
                 }
             } else if charachter == "." {
                 inputDataArray[inputDataArray.count - 1] += String(charachter)
-            } else if inputDataArray.count != 0 && !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) && !isOperation(at: inputDataArray[inputDataArray.count - 1]) {
-                inputDataArray[inputDataArray.count - 1] += String(charachter) // if element of array is not fully written trigonometry func
+            }else if inputDataArray.count != 0 {
+                if !isHyperbolicTrigonometry(at: inputDataArray[inputDataArray.count - 1]){
+                    inputDataArray[inputDataArray.count - 1] += String(charachter)
+                }else if   !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) {
+                     inputDataArray[inputDataArray.count - 1] += String(charachter)
+                }
+//            }
+//            else if inputDataArray.count != 0 && !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) && !isOperation(at: inputDataArray[inputDataArray.count - 1]) {
+//                inputDataArray[inputDataArray.count - 1] += String(charachter) // if element of array is not fully written trigonometry func
             } else {
-                inputDataArray.append(String(charachter))
+                    inputDataArray.append(String(charachter))
+                }
             }
+            print(" close separedata: \(inputDataArray)")
         }
-        print(" close separedata: \(inputDataArray)")
-    }
+
+
+
 
     private func calculateData(){  //calculate reverse polish notation
         var stack = [String]() //stack for operators
@@ -401,11 +404,11 @@ class CalcBrain : CalculatorInterface {
 
     }
     private func priorityFor(char:String) -> Int{ //determine priority
-        if char == "+" || char == "-" || char == "𝝿" || char == "e"{
+        if char == "+" || char == "-" || char == "𝝿" || char == "e" || char == "+/-"  {
             return 1
         } else if (char == "^") {
             return 3
-        } else if isTrigonomenry(at: char)  {
+        } else if   isTrigonomenry(at: char) && isHyperbolicTrigonometry(at: char)  {
             return 4
         }
         return 2
@@ -427,14 +430,21 @@ class CalcBrain : CalculatorInterface {
 
     private func isOperation(at char: String) -> Bool{ //determine if math symbol
 
-        if isOperationDM(at: char) || char == "(" || char == ")" {
+        if isOperationDM(at: char) || char == "(" || char == ")" || char == "+/-"  {
             return true
         }
         return false
     }
-
+    private func isHyperbolicTrigonometry(at char : String) -> Bool  {
+        if char == "sinh" || char == "cosh" || char == "tanh"  {
+            return true
+        }
+        return false
+    }
+    
+    
     private func isTrigonomenry(at char: String) -> Bool{ //determine if trigonometry func
-        if char == "sin" || char == "cosh"  || char == "cos" || char == "tan" || char == "snh" || char == "cosh" || char == "tanh" || char == "√"  {
+        if char == "sin"  || char == "cos" || char == "tan" || char == "√"  {
             return true
         }
         return false
@@ -442,7 +452,7 @@ class CalcBrain : CalculatorInterface {
 
     private func isOperationDM(at char: String) -> Bool{ //determine if math operator
 
-        if char == "+" || char == "÷" || char == "𝝿" || char == "e" || char == "×" || char == "-" || char == "^" || char == "cosh" || char == "√" || char == "sin" || char == "cos" || char == "tan" || char == "snh" ||  char == "tanh" {
+        if char == "+" || char == "÷" || char == "𝝿" || char == "e" || char == "×" || char == "-" || char == "^" ||  char == "√" || char == "sinh" || char == "cosh" || char == "tanh" || char == "sin" || char == "cos" || char == "tan"  || char == "+/-"  {
             return true
         }
         return false
@@ -494,7 +504,10 @@ class CalcBrain : CalculatorInterface {
             case "tan":
                 let value = stack.removeLast()
                 stack.append(tan(value))
-            case "snh":
+            case "sinh":
+                let value = stack.removeLast()
+                stack.append(sinh(value))
+            case "cosh":
                 let value = stack.removeLast()
                 stack.append(sinh(value))
             case "tanh":
@@ -503,7 +516,12 @@ class CalcBrain : CalculatorInterface {
             case "𝝿":
                 let _ = stack.removeLast()
                 stack.append(Double.pi)
-
+            case "e":
+                let _ = stack.removeLast()
+                stack.append(M_E)
+            case "+/-":
+                let _ = stack.removeLast()
+                stack.append(Double(value)! * -1)
             default:
                 stack.append( Double(value)!)
             }

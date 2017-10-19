@@ -17,7 +17,10 @@ class OutputViewController: UIViewController, OutputInterface {
     func clearDisplay(_ resultAfterClear: String){
         Label.text = resultAfterClear
     }
-    
+    func viewInDisplay() -> String?{
+        return Label.text
+        
+    }
     func display(_ result: String){
         if Label.text == "0" {
             Label.text = result

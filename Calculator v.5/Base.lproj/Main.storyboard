@@ -454,7 +454,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ws-rv-vsv">
                                                 <rect key="frame" x="100" y="0.0" width="100" height="61.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <state key="normal" title="snh"/>
+                                                <state key="normal" title="sinh"/>
                                                 <connections>
                                                     <action selector="symbolPressed:" destination="AWF-PW-gdL" eventType="touchUpInside" id="DEz-2j-WjD"/>
                                                 </connections>

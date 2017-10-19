@@ -15,7 +15,8 @@ class ViewController: UIViewController, InputInterfaceDelegate {
    
     func clear(_ clean: Memory) {
         let clearedString = calc.clear(.clear)
-      outputController?.clearDisplay(clearedString)
+        outputController?.clearDisplay(clearedString)
+       
         
     }
 
@@ -55,7 +56,14 @@ class ViewController: UIViewController, InputInterfaceDelegate {
 
 
 
-
+    func plusMinus (_plus : Function){
+        let rawValue =  outputController?.viewInDisplay()
+        let value = (Double)(rawValue!)
+        let value1 = value! * -1
+        let value2 = (String)(value1)
+        outputController?.display(value2)
+        calc.function(.sign)
+    }
 
 
     

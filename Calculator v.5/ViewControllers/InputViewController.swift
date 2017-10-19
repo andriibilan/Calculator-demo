@@ -76,7 +76,7 @@ delegate?.clear(.clear)
             delegate?.functionPressed(.fact)
         case "+/-" :
             delegate?.functionPressed(.sign)
-        case "snh" :
+        case "sinh" :
             delegate?.functionPressed(.sinh)
         case "cosh" :
             delegate?.functionPressed(.cosh)
