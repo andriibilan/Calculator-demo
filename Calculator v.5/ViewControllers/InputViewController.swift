@@ -10,7 +10,7 @@ import UIKit
 
 class InputViewController: UIViewController, InputInterface {
     var delegate: InputInterfaceDelegate?
-  private  var calcInput = CalcBrain()
+   
     @IBOutlet weak var clearButton: UIButton!
     
     
@@ -24,13 +24,13 @@ class InputViewController: UIViewController, InputInterface {
         self.clearButton?.addGestureRecognizer(longGesture)
     
     }
-  @objc func clear() {
-delegate?.clear(.clear)
+    @objc func clear() {
+        delegate?.clear(.clear)
         
         
-     }
-@objc func allClear() {
-      delegate?.allClean(.allClean)
+    }
+    @objc func allClear() {
+        delegate?.allClean(.allClean)
     }
     
 
@@ -42,13 +42,11 @@ delegate?.clear(.clear)
     
     func symbolPressed(_ symbol: String) {
         switch symbol {
-        case "=" :
-            delegate?.utilityPressed(.equal)
         case  "+" :
             delegate?.operationPressed(.plus)
         case "-" :
             delegate?.operationPressed(.minus)
-        case "x" :
+        case "×" :
             delegate?.operationPressed(.mult)
         case "÷" :
             delegate?.operationPressed(.div)
@@ -60,6 +58,10 @@ delegate?.clear(.clear)
             delegate?.utilityPressed(.leftBracket)
         case ")":
             delegate?.utilityPressed(.rightBracket)
+        case ".":
+            delegate?.utilityPressed(.dot)
+        case "=" :
+            delegate?.utilityPressed(.equal)
         case "tan" :
             delegate?.functionPressed(.tan)
         case "sin" :
@@ -82,17 +84,21 @@ delegate?.clear(.clear)
             delegate?.functionPressed(.cosh)
         case "tanh" :
             delegate?.functionPressed(.tanh)
+        case "x!" :
+            delegate?.functionPressed(.fact)
         case "𝝿" :
             delegate?.constantPressed(.pi)
         case "e" :
             delegate?.constantPressed(.e)
-        
+        case "1/x" :
+            delegate?.operationPressed(.divOne)
+
         default:
-            delegate?.display(symbol)
+            delegate?.digitPressed(symbol)
         }
-        
+
+
     }
-    
     @IBAction func symbolPressed(_ sender: UIButton) {
         symbolPressed(sender.currentTitle!)
         playClick()

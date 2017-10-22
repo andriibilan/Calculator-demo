@@ -10,22 +10,29 @@ import UIKit
 
 class OutputViewController: UIViewController, OutputInterface {
     
+  
     func cleanLabel() {
-        Label.text = "0"
+        Label.text = ""
         
     }
     func clearDisplay(_ resultAfterClear: String){
-        Label.text = resultAfterClear
+        if  Label.text != nil{
+          Label.text = resultAfterClear
+        }else {
+            Label.text = ""
+        }
     }
-    func viewInDisplay() -> String?{
-        return Label.text
+    func viewInDisplay() -> String{
+        return Label.text!
         
     }
-    func display(_ result: String){
-        if Label.text == "0" {
+    
+    func displayResult(_ result: String, operatorPressed: Bool) {
+        print("To display - \(result)")
+        if Label.text == "" || operatorPressed == true {
             Label.text = result
         } else {
-            Label.text = Label.text! + "\(result)"
+            Label.text! += result
         }
     }
     
@@ -38,6 +45,8 @@ class OutputViewController: UIViewController, OutputInterface {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       CheckingTheCorrectInput.outputController2 = self
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
     

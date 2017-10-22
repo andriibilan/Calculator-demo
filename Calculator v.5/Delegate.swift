@@ -13,7 +13,7 @@ protocol InputInterface {
 }
 
 protocol InputInterfaceDelegate {
-    func digitPressed(_ value: Double)
+    func digitPressed(_ value: String)
     func operationPressed(_ operation: Operation)
     func functionPressed(_ function: Function)
     func utilityPressed(_ utility: Utility)
