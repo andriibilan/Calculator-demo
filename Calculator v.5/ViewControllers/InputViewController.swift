@@ -54,6 +54,8 @@ class InputViewController: UIViewController, InputInterface {
             delegate?.operationPressed(.exp)
         case "%" :
             delegate?.operationPressed(.percent)
+        case "x^2" :
+            delegate?.operationPressed(.powTwo)
         case "(" :
             delegate?.utilityPressed(.leftBracket)
         case ")":
@@ -91,7 +93,7 @@ class InputViewController: UIViewController, InputInterface {
         case "e" :
             delegate?.constantPressed(.e)
         case "1/x" :
-            delegate?.operationPressed(.divOne)
+            delegate?.functionPressed(.divOne)
 
         default:
             delegate?.digitPressed(symbol)
@@ -122,16 +124,6 @@ class InputViewController: UIViewController, InputInterface {
     }
 }
 
-//
-//        if let _ = Function(rawValue: symbol){
-//            delegate?.functionPressed(Function(rawValue: symbol)!)
-//        } else if let _ = Operation(rawValue: symbol){
-//            delegate?.operationPressed(Operation(rawValue: symbol)!)
-//        } else if let _ = Utility(rawValue: symbol){
-//            delegate?.utilityPressed(Utility(rawValue: symbol)!)
-//        } else {
-//                delegate?.digitPressed(symbol)
-//            }
-//
+
 
 

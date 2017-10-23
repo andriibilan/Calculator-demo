@@ -15,21 +15,22 @@ enum Operation: String {
     case div   = "÷"
     case exp   = "^"
     case percent = "%"
-   case divOne = "1÷"
+    case powTwo   = "^2"
 }
 
 enum Function: String {
     case sqrt    = "√"
-    case sin     = "sin"
-    case cos     = "cos"
-    case tan     = "tan"
-    case sinh    = "sinh"
-    case cosh    = "cosh"
-    case tanh    = "tanh"
-    case ln      = "ln"
-    case lg      = "lg"
+    case sin     = "sin("
+    case cos     = "cos("
+    case tan     = "tan("
+    case sinh    = "hsin("
+    case cosh    = "hcos("
+    case tanh    = "htan("
+    case ln      = "ln("
+    case lg      = "lg("
     case fact    = "!"
     case sign    = "+/-"
+    case divOne = "1÷("
 }
 
 enum Memory: String {

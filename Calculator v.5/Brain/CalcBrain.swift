@@ -12,13 +12,11 @@ class CalcBrain  {
     var resultClosure: ((Double?, Error?) -> ())?
     var opertString: String = ""
     var getValue : String = ""
-    private var openBrackets = 0
     static  let shared = CalcBrain()
     private var inputDataArray = [String]()
     private var outputData = [String]()
-    
 
-    
+
 
 
     func getValueAfterCheking (getValue : String) {
@@ -28,7 +26,7 @@ class CalcBrain  {
     }
   
     private func seperateInputData(){ //function seperate inputData into math components
-       inputDataArray = []
+        inputDataArray = []
         print("open separetadata string: \(getValue)")
         
         var l = true
@@ -52,25 +50,20 @@ class CalcBrain  {
                 }
             } else if charachter == "." && !isOperation(at: inputDataArray[inputDataArray.count - 1]) {
                 inputDataArray[inputDataArray.count - 1] += String(charachter)
-            }else if inputDataArray.count != 0 {
-                if !isHyperbolicTrigonometry(at: inputDataArray[inputDataArray.count - 1]){
-                    inputDataArray[inputDataArray.count - 1] += String(charachter) // if element of array is not fully written trigonometry func
-                }else if   !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) {
-                    inputDataArray[inputDataArray.count - 1] += String(charachter) // if element of array is not fully written trigonometry func
-                }
-
-        }else {
-            inputDataArray.append(String(charachter))
+            } else if  inputDataArray.count != 0 && !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) && !isOperation(at: inputDataArray[inputDataArray.count - 1])  {
+                inputDataArray[inputDataArray.count - 1] += String(charachter) // if element of array is not fully written trigonometry func
+            } else {
+                inputDataArray.append(String(charachter))
+            }
         }
+        print(" close separedata: \(inputDataArray)")
     }
-    print(" close separedata: \(inputDataArray)")
-}
 
 
 
 
     private func calculateData(){  //calculate reverse polish notation
-      outputData = []
+        outputData = []
         var stack = [String]() //stack for operators
         for symbol in inputDataArray{
             if !isOperation(at: symbol){ //if symbol is number
@@ -110,64 +103,64 @@ class CalcBrain  {
             }
             print("close calcdata:  \(outputData)")
             print("print stack calcdata:  \(stack)")
-
+            
         }
         for element in stack.reversed() {
             outputData.append(String(element))
         }
         print("reversed outputdata calcdata:  \(outputData)")
-
+        
     }
     private func priorityFor(char:String) -> Int{ //determine priority
-        if char == "+" || char == "-" || char == "𝝿" || char == "e" || char == "+/-" || char == "!"  {
+        if char == "+" || char == "-"  {
             return 1
-        } else if (char == "^") {
+        } else if char == "^"  {
             return 3
-        } else if   isTrigonomenry(at: char) && isHyperbolicTrigonometry(at: char)  {
+        } else if   isTrigonomenry(at: char)  {
             return 4
         }
         return 2
     }
-
+    
     private func priorityBetweenOperators(first:String, second:String) -> Bool { //priority between operators
         if priorityFor(char: first) >= priorityFor(char: second) {
             return true
         }
         return false
     }
-
+    
     private func isValue(at char: String) -> Bool{// determine if number
-        if char >= "0" && char <= "9" {
+        if let _ = Double(char) {
             return true
         }
         return false
     }
-
+    
     private func isOperation(at char: String) -> Bool{ //determine if math symbol
-
+        
         if isOperationDM(at: char) || char == "(" || char == ")"   {
             return true
         }
         return false
     }
-    private func isHyperbolicTrigonometry(at char : String) -> Bool  {
-        if char == "sinh" || char == "cosh" || char == "tanh"  {
-            return true
-        }
-        return false
-    }
+    //    private func isHyperbolicTrigonometry(at char : String) -> Bool  {
+    //        if char == "sinh" || char == "cosh" || char == "tanh"  {
+    //            return true
+    //        }
+    //        return false
+    //    }
     
     
     private func isTrigonomenry(at char: String) -> Bool{ //determine if trigonometry func
-        if char == "sin"  || char == "cos" || char == "tan" || char == "√" || char == "%" {
+        if char == "sin"  || char == "cos" || char == "tan" || char == "√" || char == "%" || char == "hsin" || char == "hcos" || char == "htan" || char == "!" || char == "lg" || char == "ln" {
             return true
         }
         return false
     }
-
+    
     private func isOperationDM(at char: String) -> Bool{ //determine if math operator
-
-        if char == "+" || char == "÷" || char == "𝝿" || char == "1÷" || char == "!" || char == "e" || char == "×" || char == "-" || char == "^" ||  char == "√" || char == "sinh" || char == "cosh" || char == "tanh" || char == "sin" || char == "cos" || char == "tan"  || char == "+/-" || char == "%"  {
+        
+        if char == "+" || char == "÷" || char == "1÷" || char == "!" || char == "×" || char == "-" || char == "^" || char == "^2" || char == "√" || char == "hsin" || char == "hcos" || char == "htan" || char == "sin" || char == "cos" || char == "tan"  || char == "+/-" || char == "%" || char == "lg" || char == "ln" {
             return true
         }
         return false
@@ -223,8 +216,12 @@ class CalcBrain  {
                 }
             case "^":
                 let rightValue = stack.removeLast()
-                let leftValue = stack.removeLast()
-                stack.append(pow(leftValue, rightValue))
+                if stack.last != nil {
+                    let leftValue = stack.removeLast()
+                    stack.append(pow(leftValue, rightValue))
+                } else {
+                    stack.append(rightValue)
+                }
             case "√":
                 let value = stack.removeLast()
                 stack.append(sqrt(value))
@@ -234,34 +231,22 @@ class CalcBrain  {
             case "ln":
                 let value = stack.removeLast()
                 stack.append(log(value))
-            case "cosh":
+            case "hcos":
                 let value = stack.removeLast()
                 stack.append(cosh(value))
             case "sin":
                 let value = stack.removeLast()
                 stack.append(sin(value))
             case "cos":
-                if stack.last != 0 {
-                    let value = stack.removeLast()
-                    stack.append(cos(value))
-                    
-                } else {
-                    _ = stack.removeLast()
-                    let rightValue = stack.removeLast()
-                    stack.append(cos(rightValue))
-                }
-//                let value = stack.removeLast()
-//                stack.append(cos(value))
+                let value = stack.removeLast()
+                stack.append(cos(value))
             case "tan":
                 let value = stack.removeLast()
                 stack.append(tan(value))
-            case "sinh":
+            case "hsin":
                 let value = stack.removeLast()
                 stack.append(sinh(value))
-            case "cosh":
-                let value = stack.removeLast()
-                stack.append(sinh(value))
-            case "tanh":
+            case "htan":
                 let value = stack.removeLast()
                 stack.append(tanh(value))
             case "𝝿":
@@ -293,7 +278,7 @@ class CalcBrain  {
     }
     
     
-
+    
 }
 
 
