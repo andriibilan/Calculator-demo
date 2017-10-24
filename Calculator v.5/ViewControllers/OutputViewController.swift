@@ -28,7 +28,6 @@ class OutputViewController: UIViewController, OutputInterface {
     }
     
     func displayResult(_ result: String, operatorPressed: Bool) {
-        print("To display - \(result)")
         if Label.text == "" || operatorPressed == true {
             Label.text = result
         } else {

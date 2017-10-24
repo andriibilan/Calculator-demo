@@ -72,8 +72,8 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         checkInput.resultClosure = { (value, eror) ->() in
             if value != Double.infinity && value != -(Double.infinity) && !(value?.isNaN)!{
                 if (value != nil) {
-                    self.checkInput.myCurrentValue = "\(value!)"
-                    self.ifDouble(value!)
+                   // self.checkInput.myCurrentValue = "\(value!)"
+                    self.ifResultIsDouble(value!)
                 }
             } else {
                 self.errorPrint(value!)
@@ -87,23 +87,31 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         outputController1?.displayResult(error, operatorPressed: false)
     }
     
-    func ifDouble(_ val: Double){ //verifing Double or Int
-        let value = (Int)(val)
-        let r  = val - (Double)(value)
-        if r == 0 {
-            let operation = (String)(value)
-                 outputController1?.cleanLabel()
-            outputController1?.displayResult(operation, operatorPressed: false)
-            outputController1?.clearDisplay(operation)
-            checkInput.dotPressed = false
-        } else  {
-            let operation = (String)(val)
-              outputController1?.cleanLabel()
-           outputController1?.displayResult(operation, operatorPressed: false)
-            outputController1?.clearDisplay(operation)
-            checkInput.dotPressed = true
-            print("print after ifDouble \(checkInput.dotPressed)")
-        }   }
+    func ifResultIsDouble(_ val: Double){ //verifing Double or Int
+        if Double(Int64.max) > val {
+            let value = (Int64)(val)
+            let r  = val - (Double)(value)
+            if r == 0 {
+                let operation = (String)(value)
+                let resultWithExp = String(format: "%g", Double(operation)!)
+                outputController1?.cleanLabel()
+                outputController1?.displayResult(resultWithExp, operatorPressed: false)
+                outputController1?.clearDisplay(operation)
+                checkInput.dotPressed = false
+            } else  {
+                let operation = (String)(val)
+                let resultWithExp = String(format: "%g", Double(operation)!)
+                outputController1?.cleanLabel()
+                outputController1?.displayResult(resultWithExp , operatorPressed: false)
+                outputController1?.clearDisplay(operation)
+                checkInput.dotPressed = true
+            }
+            
+        } else {
+            outputController1?.cleanLabel()
+            outputController1?.displayResult("so big value", operatorPressed: false)
+        }
+    }
     // Do any additional setup after loading the view, typically from a nib.
 
     override func didReceiveMemoryWarning() {

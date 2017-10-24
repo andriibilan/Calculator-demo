@@ -26,7 +26,7 @@ class InputViewController: UIViewController, InputInterface {
     }
     @objc func clear() {
         delegate?.clear(.clear)
-        
+       
         
     }
     @objc func allClear() {
@@ -123,5 +123,22 @@ class InputViewController: UIViewController, InputInterface {
 }
 
 
-
+extension UIButton {
+    func pulseButton(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.1
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        
+        let fromPoint = CGPoint(x: center.x - 7, y: center.y)
+        let fromValue = NSValue(cgPoint: fromPoint)
+        
+        let toPoint = CGPoint(x: center.x + 7, y: center.y)
+        let toValue = NSValue(cgPoint: toPoint)
+        animation.fromValue = fromValue
+        animation.toValue = toValue
+        
+        layer.add(animation, forKey: nil)
+    }
+}
 

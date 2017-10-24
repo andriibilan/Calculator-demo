@@ -143,12 +143,7 @@ class CalcBrain  {
         }
         return false
     }
-    //    private func isHyperbolicTrigonometry(at char : String) -> Bool  {
-    //        if char == "sinh" || char == "cosh" || char == "tanh"  {
-    //            return true
-    //        }
-    //        return false
-    //    }
+
     
     
     private func isTrigonomenry(at char: String) -> Bool{ //determine if trigonometry func
@@ -250,14 +245,12 @@ class CalcBrain  {
             case "htan":
                 let value = stack.removeLast()
                 stack.append(tanh(value))
-           
-          
             case "!":
                 let valueF = stack.removeLast()
-                stack.append(Double(factorial(valueF)))
+                stack.append(factorial(valueF))
             case "1÷" :
                 let leftValue = stack.removeLast()
-                stack.append(1 / (Double)(leftValue))
+                stack.append(1 / (Double)((leftValue)))
             default:
                 stack.append( Double(value)!)
             }
@@ -268,8 +261,12 @@ class CalcBrain  {
     
     
     func factorial (_ value: Double) -> Double {
+        if value < 21{
         return value > 1 ? (value * factorial(value-1)) : 1.0
-    }
+        } else {
+          return Double.infinity
+        }
+        }
     
     
     
