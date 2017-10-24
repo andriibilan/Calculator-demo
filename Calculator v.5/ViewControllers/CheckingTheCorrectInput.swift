@@ -278,11 +278,11 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         var updatedString = ""
         if clean == .clear {
             if myCurrentValue != "" {
-               myCurrentValue.removeLast()
-//                if myCurrentValue.hasSuffix(".") {
-//                    dotPressed = false
-//                    print("dot pressed after clear last : \(dotPressed)")
-//                }
+                let str =  myCurrentValue.removeLast()
+                if str == "." {
+                    dotPressed = false
+                    print("dot pressed after clear last : \(dotPressed)")
+                }
                 updatedString = myCurrentValue
                
                 CheckingTheCorrectInput.outputController2?.clearDisplay(updatedString)
