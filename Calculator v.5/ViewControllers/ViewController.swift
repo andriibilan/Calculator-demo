@@ -5,7 +5,7 @@
 //  Created by andriibilan on 10/11/17.
 //  Copyright © 2017 andriibilan. All rights reserved.
 //
-
+import AVFoundation
 import UIKit
 
 class ViewController: UIViewController, InputInterfaceDelegate {
@@ -38,7 +38,8 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     func operationPressed(_ operation: Operation){
         print("OperationPreesed - \(operation)")
         checkInput.operation(operation)
-        }
+       
+    }
 
 
         
@@ -69,13 +70,22 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkInput.resultClosure = { (value, eror) ->() in
-               if (value != nil) {
+            if value != Double.infinity && value != -(Double.infinity) && !(value?.isNaN)!{
+                if (value != nil) {
                     self.checkInput.myCurrentValue = "\(value!)"
-                self.ifDouble(value!)
-               }           }
-
+                    self.ifDouble(value!)
+                }
+            } else {
+                self.errorPrint(value!)
+            }
+        }
     }
- 
+    
+    func errorPrint (_ val: Double){
+        let error = (String)(val)
+        outputController1?.cleanLabel()
+        outputController1?.displayResult(error, operatorPressed: false)
+    }
     
     func ifDouble(_ val: Double){ //verifing Double or Int
         let value = (Int)(val)

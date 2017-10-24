@@ -210,7 +210,8 @@ class CalcBrain  {
                     if stack.last != nil {
                         let leftValue = stack.removeLast()
                         stack.append(leftValue / rightValue)
-                    } else {
+                    }
+                    else {
                         stack.append(rightValue)
                     }
                 }
@@ -249,15 +250,8 @@ class CalcBrain  {
             case "htan":
                 let value = stack.removeLast()
                 stack.append(tanh(value))
-            case "𝝿":
-                let _ = stack.removeLast()
-                stack.append(Double.pi)
-            case "e":
-                let _ = stack.removeLast()
-                stack.append(M_E)
-            case "+/-":
-                let value = stack.removeLast()
-                stack.append(-(value))
+           
+          
             case "!":
                 let valueF = stack.removeLast()
                 stack.append(Double(factorial(valueF)))

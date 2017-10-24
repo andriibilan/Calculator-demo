@@ -102,7 +102,7 @@ class InputViewController: UIViewController, InputInterface {
     @IBAction func symbolPressed(_ sender: UIButton) {
         symbolPressed(sender.currentTitle!)
         playClick()
-        
+       sender.pulseButton()
     }
     
   
