@@ -29,7 +29,6 @@ enum Function: String {
     case ln      = "ln("
     case lg      = "lg("
     case fact    = "!"
-    case sign    = "+/-"
     case divOne = "1÷("
 }
 

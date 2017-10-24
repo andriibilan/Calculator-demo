@@ -70,7 +70,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         super.viewDidLoad()
         checkInput.resultClosure = { (value, eror) ->() in
                if (value != nil) {
-                    self.checkInput.opertString = "\(value!)"
+                    self.checkInput.myCurrentValue = "\(value!)"
                 self.ifDouble(value!)
                }           }
 
@@ -83,13 +83,16 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         if r == 0 {
             let operation = (String)(value)
                  outputController1?.cleanLabel()
-//            outputController1?.d(operation)
+            outputController1?.displayResult(operation, operatorPressed: false)
             outputController1?.clearDisplay(operation)
+            checkInput.dotPressed = false
         } else  {
             let operation = (String)(val)
               outputController1?.cleanLabel()
-//            outputController1?.displayResult(operation)
+           outputController1?.displayResult(operation, operatorPressed: false)
             outputController1?.clearDisplay(operation)
+            checkInput.dotPressed = true
+            print("print after ifDouble \(checkInput.dotPressed)")
         }   }
     // Do any additional setup after loading the view, typically from a nib.
 
