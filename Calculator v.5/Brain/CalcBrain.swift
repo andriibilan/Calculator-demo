@@ -260,7 +260,7 @@ class CalcBrain  {
                 stack.append(-(value))
             case "!":
                 let valueF = stack.removeLast()
-                stack.append(Double(factorial(Int(valueF))))
+                stack.append(Double(factorial(valueF)))
             case "1÷" :
                 let leftValue = stack.removeLast()
                 stack.append(1 / (Double)(leftValue))
@@ -273,8 +273,8 @@ class CalcBrain  {
     }
     
     
-    func factorial (_ value: Int) -> Int {
-        return value > 1 ? (value * factorial(value-1)) : 1
+    func factorial (_ value: Double) -> Double {
+        return value > 1 ? (value * factorial(value-1)) : 1.0
     }
     
     

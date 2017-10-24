@@ -161,7 +161,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
 //            }
             
         case .equal:
-            if  myCurrentData.isEmpty || lastValue == "s" {
+            if  myCurrentData.isEmpty  {
                 goodSymbol = ""
                 
             }else if  !isCheckedForValueType(lastValue) || lastValue == ")" {

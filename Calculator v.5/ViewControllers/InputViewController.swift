@@ -78,8 +78,6 @@ class InputViewController: UIViewController, InputInterface {
             delegate?.functionPressed(.lg)
         case "x!" :
             delegate?.functionPressed(.fact)
-        case "+/-" :
-            delegate?.functionPressed(.sign)
         case "sinh" :
             delegate?.functionPressed(.sinh)
         case "cosh" :
