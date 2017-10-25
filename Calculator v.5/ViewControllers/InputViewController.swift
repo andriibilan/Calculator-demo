@@ -9,6 +9,7 @@ import AVFoundation
 import UIKit
 
 class InputViewController: UIViewController, InputInterface {
+ 
     var delegate: InputInterfaceDelegate?
    
     @IBOutlet weak var clearButton: UIButton!
@@ -16,7 +17,8 @@ class InputViewController: UIViewController, InputInterface {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  
+  // make two fuction for one button
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.clear))//Tap function will call when user tap on button
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.allClear)) //Long function will call when user long press on button.
         tapGesture.numberOfTapsRequired = 1
@@ -39,7 +41,7 @@ class InputViewController: UIViewController, InputInterface {
         AudioServicesPlaySystemSound(1106)
     }
     
-    
+    // delegate for all symbols
     func symbolPressed(_ symbol: String) {
         switch symbol {
         case  "+" :
@@ -122,7 +124,7 @@ class InputViewController: UIViewController, InputInterface {
     }
 }
 
-
+// Make animation for button
 extension UIButton {
     func pulseButton(){
         let animation = CABasicAnimation(keyPath: "position")

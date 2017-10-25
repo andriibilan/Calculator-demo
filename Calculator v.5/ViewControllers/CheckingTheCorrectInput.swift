@@ -9,19 +9,18 @@
 import Foundation
 
 class CheckingTheCorrectInput: NSObject, CalculatorInterface {
-    
-    
-    
+
     static var outputController2 : OutputInterface?
-    // var opertString: String = ""
+    
+ // var opertString: String = ""
     private  var calc = CalcBrain()
+    private var equalPressed = false
+    private var numberLeftBrackets = 0
+    private var numberRightBrackets = 0
+    private var myCurrentValue : String = ""
     var dotPressed = false
-    var equalPressed = false
-    var numberLeftBrackets = 0
-    var numberRightBrackets = 0
-    var myCurrentValue : String = ""
     
-    
+ // fuction for input digit
     func digit(_ value: String) {
         if equalPressed == true {
             CheckingTheCorrectInput.outputController2?.cleanLabel()
@@ -32,7 +31,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             CheckingTheCorrectInput.outputController2?.displayResult(value, operatorPressed: false)
         }
     }
-    
+ // fuction which return true for operation and false for digit
     func isCheckedForValueType (_ value: String) -> Bool {
         switch value {
         case "+","-","×","÷":
@@ -49,7 +48,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
-        
+//check if  myCurrentData empty
         if !myCurrentData.isEmpty {
             lastValue = "\((myCurrentData.characters.last)!)"
             if isCheckedForValueType("\(lastValue)") {
@@ -57,7 +56,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
         }
-        
+// check the correct input oparation
         switch operation {
         case .plus:
             if lastValue != "" && lastValue != "(" && lastValue != "." && lastValue != "^" && lastValue != "√"{
@@ -119,14 +118,14 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
-        
+//check if  myCurrentData empty
         if !myCurrentData.isEmpty {
             lastValue = "\((myCurrentData.characters.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
         }
-        
+// if right brackets is missed , this fuction add missed brackets
         func addMissedRightBrackets () {
             var missedBrackets: String = ""
             var number = numberRightBrackets
@@ -140,7 +139,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         
         
         
-        
+// check the correct input oparation
         switch utility {
         case .leftBracket:
             if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "^" || lastValue == "√"  {
@@ -193,14 +192,14 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
-        
+ //check if  myCurrentData empty
         if !myCurrentData.isEmpty {
             lastValue = "\((myCurrentData.characters.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
         }
-        
+ // check the correct input oparation
         switch function {
         case .sin , .cos , .tan :
             if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "√"{
@@ -242,13 +241,14 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
-        
+//check if  myCurrentData empty
         if !myCurrentData.isEmpty {
             lastValue = "\((myCurrentData.characters.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
         }
+// check the correct input oparation
         switch constant {
         case .pi:
             if isCheckedForValueType(lastValue) || lastValue == "" || lastValue == "(" || lastValue == "√" || lastValue == "^" {
@@ -265,7 +265,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         
     }
     
-    
+// do some work after press equal
     func pressEqual () {
         myCurrentValue = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         calc.getValueAfterCheking(getValue: myCurrentValue)
@@ -274,7 +274,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         equalPressed = true
     }
     
-    
+// Clean all elemets
     func allClean(_ cleen: Memory) {
         CheckingTheCorrectInput.outputController2?.cleanLabel()
         calc.getValueAfterCheking(getValue: "")
@@ -282,13 +282,11 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         dotPressed = false
         equalPressed = false
     }
-    
+// Clean last elemet
     func clear (_ clean: Memory) {
         var myCurrentValue = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var updatedString = ""
-        if clean == .clear {
-            
-            
+        if clean == .clear { 
             if myCurrentValue != "" {
                 let str =  myCurrentValue.removeLast()
                 if str == "." {
@@ -308,42 +306,13 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     var resultClosure: ((Double?, Error?) -> ())?
     
     
-    
+// reset all number of brackets
     func resetAllBrackets() {
         
         numberLeftBrackets = 0
         numberRightBrackets = 0
     }
-    
-    
-    func addMissedRightBrackets () -> String{
-        var missedBrackets: String = ""
-        var number = numberRightBrackets
-        
-        while numberLeftBrackets > number {
-            missedBrackets += ")"
-            number += 1
-        }
-        return missedBrackets
-    }
-    
-    
-    
-    
-    
+  
 }
 
-extension String {
-    
-    func removeTrigonometryPartFromCurrentInput(_ input: String, forFunction function: Function) -> String {
-        
-        var updatedInput = input
-        
-        let rangeToDelete = updatedInput.range(of: "\(function)")
-        updatedInput.removeSubrange(rangeToDelete!)
-        
-        return updatedInput
-    }
-    
-}
 

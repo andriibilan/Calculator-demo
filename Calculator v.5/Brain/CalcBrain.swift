@@ -10,7 +10,6 @@ import Foundation
 
 class CalcBrain  {
     var resultClosure: ((Double?, Error?) -> ())?
-    var opertString: String = ""
     var getValue : String = ""
     static  let shared = CalcBrain()
     private var inputDataArray = [String]()
@@ -18,7 +17,7 @@ class CalcBrain  {
 
 
 
-
+// getValue get value after all cheking in CheckingTheCorrectInput
     func getValueAfterCheking (getValue : String) {
         self.getValue = getValue
         print("\(getValue) print get value")
@@ -155,7 +154,7 @@ class CalcBrain  {
     
     private func isOperationDM(at char: String) -> Bool{ //determine if math operator
         
-        if char == "+" || char == "÷" || char == "1÷" || char == "!" || char == "×" || char == "-" || char == "^" || char == "^2" || char == "√" || char == "hsin" || char == "hcos" || char == "htan" || char == "sin" || char == "cos" || char == "tan"  || char == "+/-" || char == "%" || char == "lg" || char == "ln" {
+        if char == "+" || char == "÷" || char == "1÷" || char == "!" || char == "×" || char == "-" || char == "^" || char == "^2" || char == "√" || char == "hsin" || char == "hcos" || char == "htan" || char == "sin" || char == "cos" || char == "tan" || char == "%" || char == "lg" || char == "ln" {
             return true
         }
         return false
@@ -259,7 +258,7 @@ class CalcBrain  {
         return stack[stack.count-1]
     }
     
-    
+    // function which calculate factorial
     func factorial (_ value: Double) -> Double {
         if value < 21{
         return value > 1 ? (value * factorial(value-1)) : 1.0
