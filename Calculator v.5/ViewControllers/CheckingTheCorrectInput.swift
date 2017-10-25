@@ -291,7 +291,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 let str =  myCurrentValue.removeLast()
                 if str == "." {
                     dotPressed = false
-                    print("dot pressed after clear last : \(dotPressed)")
                 }
                 updatedString = myCurrentValue
                 equalPressed = false
@@ -299,7 +298,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             } else {
                 myCurrentValue = ""
                 CheckingTheCorrectInput.outputController2?.clearDisplay(myCurrentValue)
-                print("empty String")
             }
         }
     }

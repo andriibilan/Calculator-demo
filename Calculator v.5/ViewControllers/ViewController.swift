@@ -26,17 +26,12 @@ class ViewController: UIViewController, InputInterfaceDelegate {
   // call function which check input fuction
     func digitPressed(_ value: String) {
        checkInput.digit(value)
-
     }
      // call function which check input operation
     func operationPressed(_ operation: Operation){
-        print("OperationPreesed - \(operation)")
         checkInput.operation(operation)
-       
     }
-
-
-        
+    
   // call function which check input fuction
     func functionPressed(_ function: Function) {
         checkInput.function(Function(rawValue: function.rawValue)!)
@@ -67,7 +62,6 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         checkInput.resultClosure = { (value, eror) ->() in
             if value != Double.infinity && value != -(Double.infinity) && !(value?.isNaN)!{
                 if (value != nil) {
-                   // self.checkInput.myCurrentValue = "\(value!)"
                     self.ifResultIsDouble(value!)
                 }
             } else {
@@ -102,7 +96,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             
         } else {
             outputController1?.cleanLabel()
-            outputController1?.displayResult("so big value", operatorPressed: false)
+            outputController1?.displayResult("value too large", operatorPressed: false)
         }
     }
     // Do any additional setup after loading the view, typically from a nib.

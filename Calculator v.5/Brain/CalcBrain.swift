@@ -20,13 +20,12 @@ class CalcBrain  {
 // getValue get value after all cheking in CheckingTheCorrectInput
     func getValueAfterCheking (getValue : String) {
         self.getValue = getValue
-        print("\(getValue) print get value")
        
     }
   
     private func seperateInputData(){ //function seperate inputData into math components
         inputDataArray = []
-        print("open separetadata string: \(getValue)")
+       // print("open separetadata string: \(getValue)")
         
         var l = true
         for ch in getValue.characters {
@@ -55,7 +54,7 @@ class CalcBrain  {
                 inputDataArray.append(String(charachter))
             }
         }
-        print(" close separedata: \(inputDataArray)")
+        //print(" close separedata: \(inputDataArray)")
     }
 
 
@@ -100,14 +99,13 @@ class CalcBrain  {
             } else {
                 stack.append(String(symbol))
             }
-            print("close calcdata:  \(outputData)")
-            print("print stack calcdata:  \(stack)")
+            //print("close calcdata:  \(outputData)")
             
         }
         for element in stack.reversed() {
             outputData.append(String(element))
         }
-        print("reversed outputdata calcdata:  \(outputData)")
+       // print("reversed outputdata calcdata:  \(outputData)")
         
     }
     private func priorityFor(char:String) -> Int{ //determine priority
@@ -253,7 +251,7 @@ class CalcBrain  {
             default:
                 stack.append( Double(value)!)
             }
-            print("print stack after RPN:  \(stack)")
+          //  print("print stack after RPN:  \(stack)")
         }
         return stack[stack.count-1]
     }
@@ -261,11 +259,11 @@ class CalcBrain  {
     // function which calculate factorial
     func factorial (_ value: Double) -> Double {
         if value < 21{
-        return value > 1 ? (value * factorial(value-1)) : 1.0
+            return value > 1 ? (value * factorial(value-1)) : 1.0
         } else {
-          return Double.infinity
+            return Double.infinity
         }
-        }
+    }
     
     
     
