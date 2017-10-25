@@ -84,13 +84,11 @@ class ViewController: UIViewController, InputInterfaceDelegate {
                 let operation = (String)(value)
                 outputController1?.cleanLabel()
                 outputController1?.displayResult(operation, operatorPressed: false)
-                outputController1?.clearDisplay(operation)
                 checkInput.dotPressed = false
             } else  {
                 let operation = (String)(val)
                 outputController1?.cleanLabel()
                 outputController1?.displayResult(operation , operatorPressed: false)
-                outputController1?.clearDisplay(operation)
                 checkInput.dotPressed = true
             }
             

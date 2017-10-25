@@ -63,7 +63,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 goodSymbol = Operation.plus.rawValue
                 dotPressed = false
                 equalPressed = false
-                print("dot after operation \(dotPressed)")
             }
             
         case .minus:
@@ -163,7 +162,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 if lastValue != "." && !isCheckedForValueType(lastValue) && lastValue != "" && lastValue != "(" && lastValue != "%" && lastValue != "√" && lastValue != "^" && lastValue != "!"{
                     goodSymbol = Utility.dot.rawValue
                     dotPressed = true
-                    print(dotPressed)
+
                 }
             }
             
@@ -186,7 +185,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
     }
-    
     
     func function(_ function: Function) {
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
@@ -299,6 +297,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 myCurrentValue = ""
                 CheckingTheCorrectInput.outputController2?.clearDisplay(myCurrentValue)
             }
+       equalPressed = false
         }
     }
     var resultClosure: ((Double?, Error?) -> ())?
