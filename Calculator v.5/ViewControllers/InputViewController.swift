@@ -15,7 +15,6 @@ class InputViewController: UIViewController, InputInterface {
     
     @IBAction func symbolPressed(_ sender: UIButton) {
         symbolPressed(sender.currentTitle!)
-        playClick()
         sender.pulseButton()
     }
     
@@ -36,9 +35,7 @@ class InputViewController: UIViewController, InputInterface {
         delegate?.allClean(.allClean)
     }
     
-    func playClick() {
-        AudioServicesPlaySystemSound(1106)
-    }
+
     
     // delegate for all symbols
     func symbolPressed(_ symbol: String) {
