@@ -75,6 +75,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         outputController1?.cleanLabel()
         outputController1?.displayResult(error, operatorPressed: false)
     }
+    
     // Check if result is double or string
     func ifResultIsDouble(_ val: Double){ //verifing Double or Int
         if Double(Int64.max) > val {
@@ -91,17 +92,10 @@ class ViewController: UIViewController, InputInterfaceDelegate {
                 outputController1?.displayResult(operation , operatorPressed: false)
                 checkInput.dotPressed = true
             }
-            
         } else {
             outputController1?.cleanLabel()
             outputController1?.displayResult("value too large", operatorPressed: false)
         }
-    }
-    // Do any additional setup after loading the view, typically from a nib.
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     

@@ -11,31 +11,26 @@ import Foundation
 class CalcBrain  {
     var resultClosure: ((Double?, Error?) -> ())?
     var getValue : String = ""
-    static  let shared = CalcBrain()
     private var inputDataArray = [String]()
     private var outputData = [String]()
-
-
 
 // getValue get value after all cheking in CheckingTheCorrectInput
     func getValueAfterCheking (getValue : String) {
         self.getValue = getValue
-       
     }
-  
     private func seperateInputData(){ //function seperate inputData into math components
         inputDataArray = []
        // print("open separetadata string: \(getValue)")
         
         var l = true
-        for ch in getValue.characters {
+        for ch in getValue {
             if ch == "-" && l == true{
                 inputDataArray.append("0")
             } else {
                 l = false
             }
         }
-        for charachter in getValue.characters {
+        for charachter in getValue {
             if isOperation(at: String(charachter)) {
                 inputDataArray.append(String(charachter))
             } else if isValue(at: String(charachter)){ //determine if last charachter is number,

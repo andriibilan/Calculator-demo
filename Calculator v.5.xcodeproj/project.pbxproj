@@ -72,6 +72,7 @@
 			children = (
 				8A783B251F8E22DF00517153 /* AppDelegate.swift */,
 				8A9FDC6E1F90DEBA00D1CA2E /* ViewControllers */,
+				8A9B6E6A1F9A526500433E26 /* CheckingTheCorrectInput.swift */,
 				8A9FDC6F1F90DEE500D1CA2E /* Brain */,
 				8A783B3D1F8E288F00517153 /* Delegate.swift */,
 				8A9FDC701F90E18D00D1CA2E /* Protocols.swift */,
@@ -91,7 +92,6 @@
 				8A783B271F8E22DF00517153 /* ViewController.swift */,
 				8A783B391F8E286E00517153 /* InputViewController.swift */,
 				8A783B3B1F8E287E00517153 /* OutputViewController.swift */,
-				8A9B6E6A1F9A526500433E26 /* CheckingTheCorrectInput.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

@@ -30,6 +30,7 @@ enum Function: String {
     case lg      = "lg("
     case fact    = "!"
     case divOne = "1÷("
+       static let allValues = [sin.rawValue, cos.rawValue, tan.rawValue, sinh.rawValue,cosh.rawValue,tanh.rawValue,ln.rawValue,lg.rawValue]
 }
 
 enum Memory: String {

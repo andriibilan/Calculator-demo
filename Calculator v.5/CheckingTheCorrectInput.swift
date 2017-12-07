@@ -50,7 +50,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         var lastValue = ""
 //check if  myCurrentData empty
         if !myCurrentData.isEmpty {
-            lastValue = "\((myCurrentData.characters.last)!)"
+            lastValue = "\((myCurrentData.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 myCurrentData.removeLast()
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
@@ -107,19 +107,16 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             }
             
         }
-        
-        
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
     }
     
     func utility(_ utility: Utility) {
-        
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
 //check if  myCurrentData empty
         if !myCurrentData.isEmpty {
-            lastValue = "\((myCurrentData.characters.last)!)"
+            lastValue = "\((myCurrentData.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
@@ -128,71 +125,55 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         func addMissedRightBrackets () {
             var missedBrackets: String = ""
             var number = numberRightBrackets
-            
             while numberLeftBrackets > number {
                 missedBrackets += Utility.rightBracket.rawValue
                 number += 1
             }
             CheckingTheCorrectInput.outputController2?.displayResult(missedBrackets, operatorPressed: false)
         }
-        
-        
-        
 // check the correct input oparation
         switch utility {
         case .leftBracket:
             if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "^" || lastValue == "√"  {
                 goodSymbol = Utility.leftBracket.rawValue
                 numberLeftBrackets += 1
-                
             } else if !isCheckedForValueType(lastValue){
                 goodSymbol = Operation.mult.rawValue + Utility.leftBracket.rawValue
                 numberLeftBrackets += 1
             }
-            
         case .rightBracket:
             if lastValue != "" && lastValue != "(" && lastValue != "." && lastValue != "^" && lastValue != "√" && !isCheckedForValueType(lastValue) {
                 goodSymbol = Utility.rightBracket.rawValue
                 numberRightBrackets += 1
-                
             }
-            
         case .dot:
             if dotPressed == false{
                 if lastValue != "." && !isCheckedForValueType(lastValue) && lastValue != "" && lastValue != "(" && lastValue != "%" && lastValue != "√" && lastValue != "^" && lastValue != "!"{
                     goodSymbol = Utility.dot.rawValue
                     dotPressed = true
-
                 }
             }
-            
-            
         case .equal:
-            if equalPressed == false{
+            if equalPressed == false {
                 if  myCurrentData.isEmpty  {
                     goodSymbol = ""
-                    
-                }else if  !isCheckedForValueType(lastValue) || lastValue == ")" {
+                } else if  !isCheckedForValueType(lastValue) || lastValue == ")" {
                     goodSymbol = ""
                     addMissedRightBrackets()
                     pressEqual()
-                    
                 }
-                
             }
-            
         }
-        
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
     }
     
     func function(_ function: Function) {
-        var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
+        let myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
  //check if  myCurrentData empty
         if !myCurrentData.isEmpty {
-            lastValue = "\((myCurrentData.characters.last)!)"
+            lastValue = "\((myCurrentData.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
@@ -230,18 +211,17 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 numberLeftBrackets += 1
             }
         }
-        
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
     }
     
     
     func constants(_ constant: Constants) {
-        var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
+        let myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
 //check if  myCurrentData empty
         if !myCurrentData.isEmpty {
-            lastValue = "\((myCurrentData.characters.last)!)"
+            lastValue = "\((myCurrentData.last)!)"
             if isCheckedForValueType("\(lastValue)") {
                 CheckingTheCorrectInput.outputController2?.displayResult(myCurrentData, operatorPressed: true)
             }
@@ -256,11 +236,8 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             if isCheckedForValueType(lastValue) || lastValue == "" || lastValue == "(" || lastValue == "√" || lastValue == "^" {
                 goodSymbol = "\(M_E)"
             }
-            
         }
-        
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
-        
     }
     
 // do some work after press equal
@@ -305,7 +282,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     
 // reset all number of brackets
     func resetAllBrackets() {
-        
         numberLeftBrackets = 0
         numberRightBrackets = 0
     }
