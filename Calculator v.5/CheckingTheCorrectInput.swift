@@ -9,7 +9,6 @@
 import Foundation
 
 class CheckingTheCorrectInput: NSObject, CalculatorInterface {
-
     static var outputController2 : OutputInterface?
     
  // var opertString: String = ""
@@ -34,7 +33,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
  // fuction which return true for operation and false for digit
     func isCheckedForValueType (_ value: String) -> Bool {
         switch value {
-        case "+","-","×","÷":
+        case "+","-","×","÷", "^":
             return true
         case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
             return false
@@ -44,7 +43,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     }
     
     func operation(_ operation: Operation) {
-        
         var myCurrentData = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var goodSymbol = ""
         var lastValue = ""
@@ -59,53 +57,41 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
 // check the correct input oparation
         switch operation {
         case .plus:
-            if lastValue != "" && lastValue != "(" && lastValue != "." && lastValue != "^" && lastValue != "√"{
+            if lastValue != "" && lastValue != "(" && lastValue != "."  && lastValue != "√"  {
                 goodSymbol = Operation.plus.rawValue
                 dotPressed = false
                 equalPressed = false
             }
-            
         case .minus:
-            if lastValue != "." && lastValue != "√" && lastValue != "^" {
+            if lastValue != "." && lastValue != "√"  {
                 goodSymbol = Operation.minus.rawValue
                 dotPressed = false
                 equalPressed = false
             }
-            
-        case .mult:
-            if lastValue != "" && lastValue != "(" && lastValue != "." && lastValue != "%" && lastValue != "^" && lastValue != "√" {
+        case .mult, .div:
+            if lastValue != "" && lastValue != "(" && lastValue != "."  && lastValue != "√" {
                 goodSymbol = Operation.mult.rawValue
                 dotPressed = false
                 equalPressed = false
             }
-            
-        case .div:
-            if lastValue != "" && lastValue != "(" && lastValue != "." && lastValue != "%" && lastValue != "^" && lastValue != "√" {
-                goodSymbol = Operation.div.rawValue
-                dotPressed = false
-                equalPressed = false
-            }
-            
         case .percent:
-            if  lastValue != "" && lastValue != "." && lastValue != "(" {
+            if   lastValue != "" && lastValue != "." && lastValue != "(" && lastValue != "%" {
                 goodSymbol = Operation.percent.rawValue
                 dotPressed = false
                 equalPressed = false
             }
         case .exp:
-            if lastValue != "" && lastValue != "." && lastValue != "("  {
+            if  lastValue != "" && lastValue != "." && lastValue != "(" && lastValue != "√"  {
                 goodSymbol = Operation.exp.rawValue
                 dotPressed = false
                 equalPressed = false
             }
-            
         case .powTwo:
-            if !isCheckedForValueType(lastValue) && lastValue != "."{
+            if  lastValue != "" && lastValue != "." && lastValue != "√" {
                 goodSymbol = Operation.powTwo.rawValue
                 dotPressed = false
                 equalPressed = false
             }
-            
         }
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
     }
@@ -137,7 +123,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "^" || lastValue == "√"  {
                 goodSymbol = Utility.leftBracket.rawValue
                 numberLeftBrackets += 1
-            } else if !isCheckedForValueType(lastValue){
+            } else if !isCheckedForValueType(lastValue) {
                 goodSymbol = Operation.mult.rawValue + Utility.leftBracket.rawValue
                 numberLeftBrackets += 1
             }
@@ -148,7 +134,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             }
         case .dot:
             if dotPressed == false{
-                if lastValue != "." && !isCheckedForValueType(lastValue) && lastValue != "" && lastValue != "(" && lastValue != "%" && lastValue != "√" && lastValue != "^" && lastValue != "!"{
+                if lastValue != "." && !isCheckedForValueType(lastValue) && lastValue != "" && lastValue != "(" && lastValue != "%" && lastValue != "√" && lastValue != "^" && lastValue != "!" {
                     goodSymbol = Utility.dot.rawValue
                     dotPressed = true
                 }
@@ -180,36 +166,36 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         }
  // check the correct input oparation
         switch function {
-        case .sin , .cos , .tan :
-            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "√"{
-                goodSymbol = function.rawValue
-                numberLeftBrackets += 1
-            }
-        case .sqrt:
-            if isCheckedForValueType(lastValue) || lastValue == "" || lastValue == "("{
-                goodSymbol = function.rawValue
-                numberLeftBrackets += 1
-            }
-        case .sinh , .cosh , .tanh :
+        case .sin , .cos , .tan, .sqrt, .sinh, .cosh, .tanh, .ln, .lg, .divOne :
             if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) {
                 goodSymbol = function.rawValue
                 numberLeftBrackets += 1
             }
-        case .ln ,.lg :
-            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) {
-                goodSymbol = function.rawValue
-                numberLeftBrackets += 1
-            }
+//        case .sqrt:
+//            if isCheckedForValueType(lastValue) || lastValue == "" || lastValue == "(" {
+//                goodSymbol = function.rawValue
+//                numberLeftBrackets += 1
+//            }
+//        case .sinh , .cosh , .tanh :
+//            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) {
+//                goodSymbol = function.rawValue
+//                numberLeftBrackets += 1
+//            }
+//        case .ln ,.lg :
+//            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) {
+//                goodSymbol = function.rawValue
+//                numberLeftBrackets += 1
+//            }
         case .fact:
-            if !isCheckedForValueType(lastValue) && lastValue != "." && lastValue != "" && lastValue != "("{
+            if !isCheckedForValueType(lastValue) && lastValue != "." && lastValue != "" && lastValue != "(" {
                 goodSymbol = function.rawValue
             }
             
-        case .divOne:
-            if   isCheckedForValueType(lastValue) || lastValue == "" || lastValue == "("{
-                goodSymbol = function.rawValue
-                numberLeftBrackets += 1
-            }
+//        case .divOne:
+//            if   isCheckedForValueType(lastValue) || lastValue == "" || lastValue == "(" {
+//                goodSymbol = function.rawValue
+//                numberLeftBrackets += 1
+//            }
         }
         CheckingTheCorrectInput.outputController2?.displayResult(goodSymbol, operatorPressed: false)
     }
@@ -241,7 +227,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     }
     
 // do some work after press equal
-    func pressEqual () {
+    func pressEqual() {
         myCurrentValue = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         calc.getValueAfterCheking(getValue: myCurrentValue)
         resultClosure?(calc.CalculateRPN(),nil)
@@ -261,9 +247,14 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     func clear (_ clean: Memory) {
         var myCurrentValue = (CheckingTheCorrectInput.outputController2?.viewInDisplay())!
         var updatedString = ""
+        var str: Character?
         if clean == .clear { 
             if myCurrentValue != "" {
-                let str =  myCurrentValue.removeLast()
+                if myCurrentValue.suffix(2) == "s(" || myCurrentValue.suffix(2) == "n(" || myCurrentValue.suffix(2) == "g(" {
+                    myCurrentValue = deleteTrigonometry(str: myCurrentValue)
+                } else {
+                    str = myCurrentValue.removeLast()
+                }
                 if str == "." {
                     dotPressed = false
                 }
@@ -274,7 +265,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 myCurrentValue = ""
                 CheckingTheCorrectInput.outputController2?.clearDisplay(myCurrentValue)
             }
-       equalPressed = false
+            equalPressed = false
         }
     }
     var resultClosure: ((Double?, Error?) -> ())?
@@ -285,7 +276,21 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         numberLeftBrackets = 0
         numberRightBrackets = 0
     }
-  
+ 
+    func deleteTrigonometry(str: String) -> String {
+        if str.suffix(3) == "lg(" || str.suffix(3) == "ln(" {
+            return delete(string: str, deleteOfNumbers: 3)
+        } else if  str.suffix(5) == "hcos(" || str.suffix(5) == "hsin(" || str.suffix(5) == "htan(" {
+            return delete(string: str, deleteOfNumbers: 5)
+        } else {
+            return delete(string: str, deleteOfNumbers: 4)
+        }
+    }
+    
+    func delete(string: String, deleteOfNumbers: Int) -> String {
+        let range1 = string.dropLast(deleteOfNumbers)
+        return String(range1)
+    }
 }
 
 

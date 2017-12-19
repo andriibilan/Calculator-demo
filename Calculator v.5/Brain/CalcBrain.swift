@@ -33,17 +33,17 @@ class CalcBrain  {
         for charachter in getValue {
             if isOperation(at: String(charachter)) {
                 inputDataArray.append(String(charachter))
-            } else if isValue(at: String(charachter)){ //determine if last charachter is number,
+            } else if isValue(at: String(charachter)) { //determine if last charachter is number,
                 if inputDataArray.count == 0 {         // if true add next charachter to the same string
                     inputDataArray.append(String(charachter))
-                } else if isValue(at: inputDataArray[inputDataArray.count - 1])  {
+                } else if isValue(at: inputDataArray[inputDataArray.count - 1]) {
                     inputDataArray[inputDataArray.count - 1] += String(charachter)
                 } else {
                     inputDataArray.append(String(charachter)) //
                 }
             } else if charachter == "." && !isOperation(at: inputDataArray[inputDataArray.count - 1]) {
                 inputDataArray[inputDataArray.count - 1] += String(charachter)
-            } else if  inputDataArray.count != 0 && !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) && !isOperation(at: inputDataArray[inputDataArray.count - 1])  {
+            } else if  inputDataArray.count != 0 && !isTrigonomenry(at: inputDataArray[inputDataArray.count - 1]) && !isOperation(at: inputDataArray[inputDataArray.count - 1]) {
                 inputDataArray[inputDataArray.count - 1] += String(charachter) // if element of array is not fully written trigonometry func
             } else {
                 inputDataArray.append(String(charachter))
@@ -55,13 +55,13 @@ class CalcBrain  {
 
 
 
-    private func calculateData(){  //calculate reverse polish notation
+    private func calculateData() {  //calculate reverse polish notation
         outputData = []
         var stack = [String]() //stack for operators
-        for symbol in inputDataArray{
-            if !isOperation(at: symbol){ //if symbol is number
+        for symbol in inputDataArray {
+            if !isOperation(at: symbol) { //if symbol is number
                 outputData.append(String(symbol))
-            } else if isOperationDM(at: String(symbol)){ //if symbol is math operation
+            } else if isOperationDM(at: String(symbol)) { //if symbol is math operation
                 if stack.count == 0 || symbol == "(" { //if stack empty or symbol = (, add symbol
                     stack.append(String(symbol))
                 } else if priorityBetweenOperators(first: stack.last!, second: symbol) &&  stack.last! != "(" {
@@ -104,11 +104,11 @@ class CalcBrain  {
         
     }
     private func priorityFor(char:String) -> Int{ //determine priority
-        if char == "+" || char == "-"  {
+        if char == "+" || char == "-" {
             return 1
-        } else if char == "^"  {
+        } else if char == "^" {
             return 3
-        } else if   isTrigonomenry(at: char)  {
+        } else if   isTrigonomenry(at: char) {
             return 4
         }
         return 2
@@ -121,7 +121,7 @@ class CalcBrain  {
         return false
     }
     
-    private func isValue(at char: String) -> Bool{// determine if number
+    private func isValue(at char: String) -> Bool {// determine if number
         if let _ = Double(char) {
             return true
         }
@@ -129,8 +129,7 @@ class CalcBrain  {
     }
     
     private func isOperation(at char: String) -> Bool{ //determine if math symbol
-        
-        if isOperationDM(at: char) || char == "(" || char == ")"   {
+        if isOperationDM(at: char) || char == "(" || char == ")" {
             return true
         }
         return false
@@ -138,14 +137,14 @@ class CalcBrain  {
 
     
     
-    private func isTrigonomenry(at char: String) -> Bool{ //determine if trigonometry func
+    private func isTrigonomenry(at char: String) -> Bool { //determine if trigonometry func
         if char == "sin"  || char == "cos" || char == "tan" || char == "√" || char == "%" || char == "hsin" || char == "hcos" || char == "htan" || char == "!" || char == "lg" || char == "ln" {
             return true
         }
         return false
     }
     
-    private func isOperationDM(at char: String) -> Bool{ //determine if math operator
+    private func isOperationDM(at char: String) -> Bool { //determine if math operator
         
         if char == "+" || char == "÷" || char == "1÷" || char == "!" || char == "×" || char == "-" || char == "^" || char == "^2" || char == "√" || char == "hsin" || char == "hcos" || char == "htan" || char == "sin" || char == "cos" || char == "tan" || char == "%" || char == "lg" || char == "ln" {
             return true
@@ -193,7 +192,6 @@ class CalcBrain  {
             case "÷":
                 if stack.last != 0 {
                     let rightValue = stack.removeLast()
-                    
                     if stack.last != nil {
                         let leftValue = stack.removeLast()
                         stack.append(leftValue / rightValue)
@@ -246,14 +244,14 @@ class CalcBrain  {
             default:
                 stack.append( Double(value)!)
             }
-          //  print("print stack after RPN:  \(stack)")
+            print("print stack after RPN:  \(stack)")
         }
         return stack[stack.count-1]
     }
     
     // function which calculate factorial
     func factorial (_ value: Double) -> Double {
-        if value < 21{
+        if value < 21 {
             return value > 1 ? (value * factorial(value-1)) : 1.0
         } else {
             return Double.infinity

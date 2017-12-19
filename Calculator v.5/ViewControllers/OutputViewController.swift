@@ -18,7 +18,7 @@ class OutputViewController: UIViewController, OutputInterface {
     
     // use for output result after clean last element
     func clearDisplay(_ resultAfterClear: String) {
-        if  Label.text != nil{
+        if  Label.text != nil {
           Label.text = resultAfterClear
         } else {
             Label.text = ""
@@ -26,7 +26,7 @@ class OutputViewController: UIViewController, OutputInterface {
     }
     
     // current view in display
-    func viewInDisplay() -> String{
+    func viewInDisplay() -> String {
         return Label.text!
     }
     
@@ -40,9 +40,7 @@ class OutputViewController: UIViewController, OutputInterface {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
        CheckingTheCorrectInput.outputController2 = self
-        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
