@@ -13,6 +13,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     
  // var opertString: String = ""
     private  var calc = CalcBrain()
+
     private var equalPressed = false
     private var numberLeftBrackets = 0
     private var numberRightBrackets = 0
@@ -70,7 +71,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             }
         case .mult, .div:
             if lastValue != "" && lastValue != "(" && lastValue != "."  && lastValue != "√" {
-                goodSymbol = Operation.mult.rawValue
+                goodSymbol = operation.rawValue
                 dotPressed = false
                 equalPressed = false
             }
@@ -133,7 +134,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 numberRightBrackets += 1
             }
         case .dot:
-            if dotPressed == false{
+            if dotPressed == false {
                 if lastValue != "." && !isCheckedForValueType(lastValue) && lastValue != "" && lastValue != "(" && lastValue != "%" && lastValue != "√" && lastValue != "^" && lastValue != "!" {
                     goodSymbol = Utility.dot.rawValue
                     dotPressed = true

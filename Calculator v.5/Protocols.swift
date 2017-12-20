@@ -16,6 +16,12 @@ protocol OutputInterface {
     func viewInDisplay() ->String
 }
 
+protocol HistoryProtocol {
+    func getHistoryArray(equation: String, result: String)
+    
+}
+
+
 protocol CalculatorInterface {
     func digit(_ value: String)
     func operation(_ operation: Operation)

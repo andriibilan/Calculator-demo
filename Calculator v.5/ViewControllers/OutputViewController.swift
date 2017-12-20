@@ -8,40 +8,49 @@
 
 import UIKit
 
-class OutputViewController: UIViewController, OutputInterface {
-        @IBOutlet weak var Label: UILabel!
+class OutputViewController: UIViewController {
+    @IBOutlet weak var historyView: UIView!
+    @IBOutlet weak var resultView: UIView!
     
-  //  clean all elemets
-    func cleanLabel() {
-        Label.text = ""
+    var outputInterface: OutputInterface?
+    var history: HistoryProtocol?
+    
+    func displayResults(value: String) {
+        outputInterface?.cleanLabel()
+        outputInterface?.displayResult(value, operatorPressed: false)
     }
     
-    // use for output result after clean last element
-    func clearDisplay(_ resultAfterClear: String) {
-        if  Label.text != nil {
-          Label.text = resultAfterClear
+    func currentTexTinDisplay() -> String {
+        return (outputInterface?.viewInDisplay())!
+        
+    }
+    
+    func hideHistoryOutput(changeLabel: Bool) {
+        if changeLabel == true {
+            historyView.isHidden = false
+            resultView.isHidden = true
         } else {
-            Label.text = ""
+            historyView.isHidden = true
+            resultView.isHidden = false
         }
     }
     
-    // current view in display
-    func viewInDisplay() -> String {
-        return Label.text!
-    }
-    
-    // output result in display
-    func displayResult(_ result: String, operatorPressed: Bool) {
-        if Label.text == "" || operatorPressed == true {
-            Label.text = result
-        } else {
-            Label.text! += result
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
-       CheckingTheCorrectInput.outputController2 = self
-        // Do any additional setup after loading the view, typically from a nib.
+        historyView.isHidden = true
+    }
+    
+    func getHistoryArray(equation: String, result: String) {
+        history?.getHistoryArray(equation: equation, result: result)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "outputResult" {
+            outputInterface = segue.destination as? OutputResultViewController
+        }
+        if segue.identifier == "outputHistory" {
+            history = segue.destination as? OutputHistoryViewController
+        }
     }
 
 }
