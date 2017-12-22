@@ -20,6 +20,7 @@
 		8A9B6E6B1F9A526500433E26 /* CheckingTheCorrectInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9B6E6A1F9A526500433E26 /* CheckingTheCorrectInput.swift */; };
 		8A9B6E6D1F9A52F200433E26 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9B6E6C1F9A52F200433E26 /* Operations.swift */; };
 		8A9FDC711F90E18D00D1CA2E /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FDC701F90E18D00D1CA2E /* Protocols.swift */; };
+		8AB02DC41FEC2A83001ACF72 /* ViewGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB02DC31FEC2A83001ACF72 /* ViewGradient.swift */; };
 		8AD8D9621FE9269700E62E27 /* OutputResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD8D9611FE9269700E62E27 /* OutputResultViewController.swift */; };
 		8AD8D9641FE926A800E62E27 /* OutputHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD8D9631FE926A800E62E27 /* OutputHistoryViewController.swift */; };
 		8AD8D9661FE98FCD00E62E27 /* OutputHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD8D9651FE98FCD00E62E27 /* OutputHistoryTableViewCell.swift */; };
@@ -41,6 +42,7 @@
 		8A9B6E6A1F9A526500433E26 /* CheckingTheCorrectInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingTheCorrectInput.swift; sourceTree = "<group>"; };
 		8A9B6E6C1F9A52F200433E26 /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
 		8A9FDC701F90E18D00D1CA2E /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		8AB02DC31FEC2A83001ACF72 /* ViewGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewGradient.swift; sourceTree = "<group>"; };
 		8AD8D9611FE9269700E62E27 /* OutputResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputResultViewController.swift; sourceTree = "<group>"; };
 		8AD8D9631FE926A800E62E27 /* OutputHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputHistoryViewController.swift; sourceTree = "<group>"; };
 		8AD8D9651FE98FCD00E62E27 /* OutputHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputHistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				8A9FDC701F90E18D00D1CA2E /* Protocols.swift */,
 				8A9B6E6C1F9A52F200433E26 /* Operations.swift */,
 				8A783B371F8E258400517153 /* RoundButton.swift */,
+				8AB02DC31FEC2A83001ACF72 /* ViewGradient.swift */,
 				8A783B291F8E22DF00517153 /* Main.storyboard */,
 				8A783B2E1F8E22DF00517153 /* LaunchScreen.storyboard */,
 				8A783B311F8E22DF00517153 /* Info.plist */,
@@ -189,6 +192,7 @@
 				8A9B6E6B1F9A526500433E26 /* CheckingTheCorrectInput.swift in Sources */,
 				8A783B3E1F8E288F00517153 /* Delegate.swift in Sources */,
 				8A783B3C1F8E287E00517153 /* OutputViewController.swift in Sources */,
+				8AB02DC41FEC2A83001ACF72 /* ViewGradient.swift in Sources */,
 				8A783B381F8E258400517153 /* RoundButton.swift in Sources */,
 				8A783B281F8E22DF00517153 /* ViewController.swift in Sources */,
 				8A783B261F8E22DF00517153 /* AppDelegate.swift in Sources */,

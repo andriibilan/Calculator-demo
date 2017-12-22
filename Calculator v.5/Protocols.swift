@@ -32,3 +32,5 @@ protocol CalculatorInterface {
     func clear (_ clean: Memory)
     var resultClosure: ((Double?, Error?) -> ())? { get set }
 }
+
+

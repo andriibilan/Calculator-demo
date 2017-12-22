@@ -14,11 +14,9 @@ class OutputResultViewController: UIViewController, OutputInterface {
     // output result in display
     func displayResult(_ result: String, operatorPressed: Bool) {
         if Label.text == "" || operatorPressed == true {
-            print("result: \(result)")
             Label.text = result
         } else {
             Label.text! += result
-            print(result)
         }
     }
     

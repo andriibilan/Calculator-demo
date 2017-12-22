@@ -21,8 +21,7 @@ class OutputViewController: UIViewController {
     }
     
     func currentTexTinDisplay() -> String {
-        return (outputInterface?.viewInDisplay())!
-        
+        return (outputInterface?.viewInDisplay())!        
     }
     
     func hideHistoryOutput(changeLabel: Bool) {
@@ -42,6 +41,7 @@ class OutputViewController: UIViewController {
     
     func getHistoryArray(equation: String, result: String) {
         history?.getHistoryArray(equation: equation, result: result)
+          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

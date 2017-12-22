@@ -10,16 +10,27 @@ import UIKit
 
 class InputViewController: UIViewController, InputInterface {
     var delegate: InputInterfaceDelegate?
-    
     @IBOutlet weak var clearButton: UIButton!
     
     @IBAction func symbolPressed(_ sender: UIButton) {
         symbolPressed(sender.currentTitle!)
-        sender.pulseButton()
+        animation(button: sender)
+    }
+    
+    func animation(button: UIButton) {
+        button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        button.backgroundColor = UIColor.green
+        UIView.animate(withDuration: 0.5, delay: 0, options: .allowUserInteraction, animations: { [button] in
+            button.transform = CGAffineTransform.identity
+            }, completion: { (final) in
+                button.backgroundColor = UIColor.init(red: 251.0/255.0, green: 227.0/255.0, blue: 223.0/255.0, alpha: 1)
+        })
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
   // make two fuction for one button
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.clear))//Tap function will call when user tap on button
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.allClear)) //Long function will call when user long press on button.
@@ -35,8 +46,10 @@ class InputViewController: UIViewController, InputInterface {
         delegate?.allClean(.allClean)
     }
     
+    func retur1() {
+        print("max count")
+    }
 
-    
     // delegate for all symbols
     func symbolPressed(_ symbol: String) {
         switch symbol {
@@ -101,24 +114,3 @@ class InputViewController: UIViewController, InputInterface {
         }
     }
 }
-
-// Make animation for button
-extension UIButton {
-    func pulseButton(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.1
-        animation.repeatCount = 2
-        animation.autoreverses = true
-        
-        let fromPoint = CGPoint(x: center.x - 7, y: center.y)
-        let fromValue = NSValue(cgPoint: fromPoint)
-        
-        let toPoint = CGPoint(x: center.x + 7, y: center.y)
-        let toValue = NSValue(cgPoint: toPoint)
-        animation.fromValue = fromValue
-        animation.toValue = toValue
-        
-        layer.add(animation, forKey: nil)
-    }
-}
-

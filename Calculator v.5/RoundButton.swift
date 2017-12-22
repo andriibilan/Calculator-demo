@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import QuartzCore
 // made my button round
 @IBDesignable public class MyButton: UIButton
     {
@@ -29,4 +29,14 @@ import UIKit
    
 }
 
+extension CALayer {
+    func roundCorners(corners: UIRectCorner, radius: CGFloat, bounds: CGRect) {
+        let maskPath = UIBezierPath(roundedRect: bounds,
+                                    byRoundingCorners: corners,
+                                    cornerRadii: CGSize(width: radius, height: radius)).cgPath
+        let shape = CAShapeLayer()
+        shape.path = maskPath
+        mask = shape
+    }
 
+}
