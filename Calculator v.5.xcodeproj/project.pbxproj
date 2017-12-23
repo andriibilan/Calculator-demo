@@ -87,9 +87,9 @@
 				8A9B6E6C1F9A52F200433E26 /* Operations.swift */,
 				8A783B371F8E258400517153 /* RoundButton.swift */,
 				8AB02DC31FEC2A83001ACF72 /* ViewGradient.swift */,
+				8A783B311F8E22DF00517153 /* Info.plist */,
 				8A783B291F8E22DF00517153 /* Main.storyboard */,
 				8A783B2E1F8E22DF00517153 /* LaunchScreen.storyboard */,
-				8A783B311F8E22DF00517153 /* Info.plist */,
 				8A783B2C1F8E22DF00517153 /* Assets.xcassets */,
 			);
 			path = "Calculator v.5";

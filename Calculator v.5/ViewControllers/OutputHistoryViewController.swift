@@ -11,7 +11,7 @@ import UIKit
 class OutputHistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HistoryProtocol {
     @IBOutlet weak var tableView: UITableView!
     var historyArray:[String] = []
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return historyArray.count
     }
@@ -29,9 +29,13 @@ class OutputHistoryViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func getHistoryArray(equation: String, result: String) {
-     historyArray.append(equation +  "\n" + " = " + result)
+        historyArray.append(equation +  "\n" + " = " + result)
     }
-
+    func deleteAllHistory() {
+        historyArray.removeAll()
+        tableView.reloadData()
+    }
+    
     @objc func loadList(notification: NSNotification) {
         tableView.reloadData()
     }
@@ -39,7 +43,7 @@ class OutputHistoryViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tableView.estimatedRowHeight = 70

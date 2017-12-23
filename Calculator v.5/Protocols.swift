@@ -18,7 +18,7 @@ protocol OutputInterface {
 
 protocol HistoryProtocol {
     func getHistoryArray(equation: String, result: String)
-    
+    func deleteAllHistory()
 }
 
 

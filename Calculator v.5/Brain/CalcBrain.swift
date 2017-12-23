@@ -146,7 +146,7 @@ class CalcBrain  {
     
     private func isOperationDM(at char: String) -> Bool { //determine if math operator
         
-        if char == "+" || char == "÷" || char == "1÷" || char == "!" || char == "×" || char == "-" || char == "^" || char == "^2" || char == "√" || char == "hsin" || char == "hcos" || char == "htan" || char == "sin" || char == "cos" || char == "tan" || char == "%" || char == "lg" || char == "ln" {
+        if char == "+" || char == "÷" || char == "1÷" || char == "!" || char == "×" || char == "-" || char == "^" || char == "x²" || char == "√" || char == "hsin" || char == "hcos" || char == "htan" || char == "sin" || char == "cos" || char == "tan" || char == "%" || char == "lg" || char == "ln" {
             return true
         }
         return false

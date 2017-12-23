@@ -12,6 +12,11 @@ class OutputViewController: UIViewController {
     @IBOutlet weak var historyView: UIView!
     @IBOutlet weak var resultView: UIView!
     
+    @IBAction func deleteHistory(_ sender: UIButton) {
+        history?.deleteAllHistory()
+        scaleAnimate(button: sender)
+        cleanAll()
+    }
     var outputInterface: OutputInterface?
     var history: HistoryProtocol?
     
@@ -54,6 +59,13 @@ class OutputViewController: UIViewController {
     func getHistoryArray(equation: String, result: String) {
         history?.getHistoryArray(equation: equation, result: result)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+    }
+    
+    func scaleAnimate(button: UIButton) {
+        button.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        UIView.animate(withDuration: 0.3, delay: 0, options: .allowUserInteraction, animations: { [button] in
+            button.transform = CGAffineTransform.identity
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

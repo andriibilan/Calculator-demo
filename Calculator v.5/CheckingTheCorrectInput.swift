@@ -9,24 +9,11 @@
 import Foundation
 
 class CheckingTheCorrectInput: NSObject, CalculatorInterface {
-
-    
     private  var calc = CalcBrain()
     private var equalPressed = false
     private var numberLeftBrackets = 0
     private var numberRightBrackets = 0
     var dotPressed = false
-    
- // fuction for input digit
-    func digit(_ value: String) -> Bool {
-        guard equalPressed == true else {
-            return true
-        }
-        equalPressed = false
-        dotPressed = false
-        return false
-    }
-    
  // fuction which return true for operation and false for digit
     func isCheckedForValueType (_ value: String) -> Bool {
         switch value {
@@ -39,22 +26,26 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         }
     }
     
+    // MARK: - Validating for input values
+    func digit(_ value: String) -> Bool {
+        guard equalPressed == true else {
+            return true
+        }
+        equalPressed = false
+        dotPressed = false
+        return false
+    }
+    
     func operation(_ operation: Operation, lastValue: String) -> Bool {
         switch operation {
-        case .plus:
-            if lastValue != "" && lastValue != "(" && lastValue != "."  && lastValue != "√"  {
+        case .plus, .mult, .div, .exp , .powTwo:
+            if lastValue != "" && lastValue != "(" && lastValue != "."  && lastValue != "√" {
                 dotPressed = false
                 equalPressed = false
                 return true
             }
         case .minus:
-            if lastValue != "." && lastValue != "√"  {
-                dotPressed = false
-                equalPressed = false
-                return true
-            }
-        case .mult, .div, .exp , .powTwo:
-            if lastValue != "" && lastValue != "(" && lastValue != "."  && lastValue != "√" {
+            if lastValue != "." && lastValue != "√" {
                 dotPressed = false
                 equalPressed = false
                 return true
@@ -72,7 +63,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     func utility(_ utility: Utility, lastValue: String) -> Bool {
         switch utility {
         case .leftBracket:
-            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "^" || lastValue == "√"  {
+            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) || lastValue == "^" || lastValue == "√" {
                 numberLeftBrackets += 1
                return true
             }
@@ -95,12 +86,9 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
             }
         case .equal:
             if equalPressed == false {
-                print(!isCheckedForValueType(lastValue) )
-                if  lastValue.isEmpty  {
+                if  lastValue.isEmpty || lastValue == "(" {
                    return false
-                } else if lastValue == "(" {
-                    return false
-                }  else if  !isCheckedForValueType(lastValue) || lastValue == ")" {
+                } else if  !isCheckedForValueType(lastValue) || lastValue == ")" {
                     return true
                 }
             }
@@ -109,15 +97,18 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     }
     
     func function(_ function: Function, lastValue: String) -> Bool {
- // check the correct input oparation
         switch function {
-        case .sin , .cos , .tan, .sqrt, .sinh, .cosh, .tanh, .ln, .lg, .divOne :
+        case .sin , .cos , .tan, .sinh, .cosh, .tanh, .ln, .lg, .divOne :
             if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) {
                 numberLeftBrackets += 1
                 return true
             }
+        case .sqrt:
+            if lastValue == "" || lastValue == "(" || isCheckedForValueType(lastValue) {
+                return true
+            }
         case .fact:
-            if !isCheckedForValueType(lastValue) && lastValue != "." && lastValue != "" && lastValue != "(" {
+            if !isCheckedForValueType(lastValue) && lastValue != "." && lastValue != "" && lastValue != "(" && lastValue != "√" && lastValue != "!" {
                 return true
             }
         }
@@ -134,6 +125,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         return false
     }
     
+  // MARK: - Missing Brackets
     func addMissedRightBrackets () -> String {
         var missedBrackets: String = ""
         var number = numberRightBrackets
@@ -152,7 +144,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         equalPressed = true
     }
     
-// Clean all elemets
+ // MARK: - Clean Function
     func allClean(_ cleen: Memory) {
         calc.getValueAfterCheking(getValue: "")
         resetAllBrackets()
@@ -193,6 +185,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
         numberRightBrackets = 0
     }
  
+     // MARK: - Delete Trigonometry
     func deleteTrigonometry(str: String) -> String {
         if str.suffix(3) == "lg(" || str.suffix(3) == "ln(" {
             return delete(string: str, deleteOfNumbers: 3)

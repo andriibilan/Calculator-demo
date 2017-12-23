@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, InputInterfaceDelegate {
     var checkInput = CheckingTheCorrectInput()
     var output = OutputViewController()
-
+    let defaults = UserDefaults.standard
     @IBOutlet weak var showButton: UIButton!
     
     func currentData() -> String {
@@ -22,7 +22,13 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         }
         return lastValue
     }
-
+    func colorForAnimation(isOperationGood: Bool) {
+        if isOperationGood == true {
+            defaults.set(true, forKey: "checkGoodColor")
+        } else {
+            defaults.set(false, forKey: "checkGoodColor")
+        }
+    }
     // fuction which clear last element
     func clear(_ clean: Memory) {
         let equationAfterClear =  checkInput.clear(.clear, equation: output.currentTexTinDisplay())
@@ -36,6 +42,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     
     // call function which check input fuction
     func digitPressed(_ value: String) {
+        colorForAnimation(isOperationGood: true)
         guard checkInput.digit(value) else {
             return  output.displayResults(value: value)
         }
@@ -47,28 +54,34 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             var operatorPressAgain =  output.currentTexTinDisplay()
             operatorPressAgain.removeLast()
             output.displayResults(value: operatorPressAgain)
+            colorForAnimation(isOperationGood: false)
         }
         guard  checkInput.operation(operation, lastValue: currentData()) else {
+            colorForAnimation(isOperationGood: false)
             return print("operation fail")
         }
+         colorForAnimation(isOperationGood: true)
         output.display(value: operation.rawValue, operatorPressed: false)
     }
 
     // call function which check input fuction
     func functionPressed(_ function: Function) {
         guard  checkInput.function(function, lastValue: currentData()) else {
+            colorForAnimation(isOperationGood: false)
             return print("function fail")
         }
         output.display(value: function.rawValue, operatorPressed: false)
+        colorForAnimation(isOperationGood: true)
     }
     
     // call function which check input utility
     func utilityPressed(_ utility: Utility) {
-        //checkInput.utility(utility)
         guard checkInput.utility(utility, lastValue: currentData()) else {
+            colorForAnimation(isOperationGood: false)
             return print("utility fail")
         }
         output.display(value: utility.rawValue, operatorPressed: false)
+        colorForAnimation(isOperationGood: true)
         if utility == Utility.equal {
             let brackets = checkInput.addMissedRightBrackets()
             output.display(value: brackets, operatorPressed: false)
@@ -78,11 +91,11 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     
     // call function which check input constant
     func constantPressed(_ const: Constants) {
-       // checkInput.constants(Constants(rawValue: const.rawValue)!)
         guard checkInput.constants(const, lastValue: currentData()) else {
+            colorForAnimation(isOperationGood: false)
             return print("const is fail")
         }
-
+        colorForAnimation(isOperationGood: true)
         guard const == Constants.pi else {
             return output.display(value: "\(M_E)", operatorPressed: false)
         }
@@ -101,7 +114,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        constraint.constant = 0
+     //   constraint.constant = 0
         checkInput.resultClosure = { (value, eror) ->() in
             guard value != Double.infinity && value != -(Double.infinity) && !(value?.isNaN)! else {
                 return self.errorPrint(value!)
@@ -132,7 +145,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
                 let operation = String(value)
                 sendResultToDisplay(result: operation)
                 checkInput.dotPressed = false
-            } else  {
+            } else {
                 let operation = (String)(val)
                 sendResultToDisplay(result: operation)
                 checkInput.dotPressed = true
@@ -156,9 +169,10 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         print("check bool: \(topmenuHidden)")
         if topmenuHidden {
             if UIDevice.current.orientation.isPortrait {
-                constraint.constant = view.bounds.height - outputView.frame.height - 36.5
+                constraint.constant =  -(view.bounds.height - outputView.frame.height - 45)
+                print(constraint.constant)
             } else {
-                constraint.constant = view.bounds.height - outputView.frame.height - 16.5
+                constraint.constant = -(view.bounds.height - outputView.frame.height - 25)
                 
             }
             print(outputView.frame.height)
@@ -171,7 +185,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             })
             topmenuHidden = false
         } else {
-            constraint.constant = 0
+            constraint.constant = 15
             UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
                 self.output.hideHistoryOutput(changeLabel: false)
@@ -192,17 +206,17 @@ class ViewController: UIViewController, InputInterfaceDelegate {
         if UIDevice.current.orientation.isPortrait {
             if topmenuHidden {
                 print("bool is true : \(topmenuHidden)")
-                constraint.constant = 0
+                constraint.constant = 15
             } else {
-                constraint.constant = view.bounds.width - 120
+                constraint.constant = -(view.bounds.width - 113)
                 print("constant height: \(-(view.bounds.width - outputView.bounds.width))")
             }
         } else if UIDevice.current.orientation.isLandscape {
             print("bound landskape: \(showButton.bounds)")
             if topmenuHidden {
-                constraint.constant = 0//view.bounds.width - outputView.frame.width
+                constraint.constant = 15//view.bounds.width - outputView.frame.width
             } else {
-                constraint.constant =  view.frame.size.width - 83
+                constraint.constant =  -(view.frame.size.width - 93)
             }
         }
     }
