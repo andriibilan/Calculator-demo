@@ -13,37 +13,80 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     var output = OutputViewController()
 
     @IBOutlet weak var showButton: UIButton!
+    
+    func currentData() -> String {
+        let myCurrentData = output.currentTexTinDisplay()
+        var lastValue = ""
+        if !myCurrentData.isEmpty {
+            lastValue = "\((myCurrentData.last)!)"
+        }
+        return lastValue
+    }
+
     // fuction which clear last element
     func clear(_ clean: Memory) {
-        checkInput.clear(.clear)
+        let equationAfterClear =  checkInput.clear(.clear, equation: output.currentTexTinDisplay())
+        output.clearLast(value: equationAfterClear)
     }
     // fuction which clean all value
     func allClean(_ clean: Memory) {
         checkInput.allClean(.allClean)
+        output.cleanAll()
     }
     
     // call function which check input fuction
     func digitPressed(_ value: String) {
-        checkInput.digit(value)
+        guard checkInput.digit(value) else {
+            return  output.displayResults(value: value)
+        }
+        output.display(value: value, operatorPressed: false)
     }
     // call function which check input operation
     func operationPressed(_ operation: Operation) {
-        checkInput.operation(operation)
+        if checkInput.isCheckedForValueType("\(currentData())") {
+            var operatorPressAgain =  output.currentTexTinDisplay()
+            operatorPressAgain.removeLast()
+            output.displayResults(value: operatorPressAgain)
+        }
+        guard  checkInput.operation(operation, lastValue: currentData()) else {
+            return print("operation fail")
+        }
+        output.display(value: operation.rawValue, operatorPressed: false)
     }
-    
+
     // call function which check input fuction
     func functionPressed(_ function: Function) {
-        checkInput.function(Function(rawValue: function.rawValue)!)
+        guard  checkInput.function(function, lastValue: currentData()) else {
+            return print("function fail")
+        }
+        output.display(value: function.rawValue, operatorPressed: false)
     }
     
     // call function which check input utility
     func utilityPressed(_ utility: Utility) {
-        checkInput.utility(utility)
+        //checkInput.utility(utility)
+        guard checkInput.utility(utility, lastValue: currentData()) else {
+            return print("utility fail")
+        }
+        output.display(value: utility.rawValue, operatorPressed: false)
+        if utility == Utility.equal {
+            let brackets = checkInput.addMissedRightBrackets()
+            output.display(value: brackets, operatorPressed: false)
+            checkInput.pressEqual(equation: output.currentTexTinDisplay())
+        }
     }
     
     // call function which check input constant
     func constantPressed(_ const: Constants) {
-        checkInput.constants(Constants(rawValue: const.rawValue)!)
+       // checkInput.constants(Constants(rawValue: const.rawValue)!)
+        guard checkInput.constants(const, lastValue: currentData()) else {
+            return print("const is fail")
+        }
+
+        guard const == Constants.pi else {
+            return output.display(value: "\(M_E)", operatorPressed: false)
+        }
+        output.display(value: "\(Double.pi)", operatorPressed: false)
     }
     
     // connects InputViewController and OutputViewController with ViewController
@@ -108,7 +151,7 @@ class ViewController: UIViewController, InputInterfaceDelegate {
     @IBOutlet weak var outputView: UIView!
     
     @IBOutlet weak var constraint: NSLayoutConstraint!
-     var topmenuHidden: Bool = true
+    var topmenuHidden: Bool = true
     @IBAction func showHistory(_ sender: Any) {
         print("check bool: \(topmenuHidden)")
         if topmenuHidden {
@@ -120,23 +163,22 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             }
             print(outputView.frame.height)
             print(constraint.constant)
-              self.output.hideHistoryOutput(changeLabel: true)
+            self.output.hideHistoryOutput(changeLabel: true)
             UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
-            }, completion: {(final) in
-               
-            })
-            topmenuHidden = false
-        } else {
-            
-            constraint.constant = 0
-            UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-               self.output.hideHistoryOutput(changeLabel: false)
             }, completion: {(final) in
                 
             })
-
+            topmenuHidden = false
+        } else {
+            constraint.constant = 0
+            UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+                self.output.hideHistoryOutput(changeLabel: false)
+            }, completion: {(final) in
+                
+            })
+            
             topmenuHidden = true
         }
     }
@@ -148,7 +190,6 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             print( "w:\(self.view.bounds.size.width)" )
         }
         if UIDevice.current.orientation.isPortrait {
-           // showButton.layer.roundCorners(corners: [.bottomRight, .bottomLeft], radius: 10)
             if topmenuHidden {
                 print("bool is true : \(topmenuHidden)")
                 constraint.constant = 0
@@ -165,7 +206,4 @@ class ViewController: UIViewController, InputInterfaceDelegate {
             }
         }
     }
-  
-    
 }
-

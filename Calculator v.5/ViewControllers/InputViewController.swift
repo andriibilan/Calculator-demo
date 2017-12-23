@@ -25,12 +25,10 @@ class InputViewController: UIViewController, InputInterface {
             }, completion: { (final) in
                 button.backgroundColor = UIColor.init(red: 251.0/255.0, green: 227.0/255.0, blue: 223.0/255.0, alpha: 1)
         })
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
   // make two fuction for one button
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.clear))//Tap function will call when user tap on button
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.allClear)) //Long function will call when user long press on button.
@@ -38,6 +36,7 @@ class InputViewController: UIViewController, InputInterface {
         self.clearButton?.addGestureRecognizer(tapGesture)
         self.clearButton?.addGestureRecognizer(longGesture)
     }
+    
     @objc func clear() {
         delegate?.clear(.clear)
     }
@@ -46,10 +45,6 @@ class InputViewController: UIViewController, InputInterface {
         delegate?.allClean(.allClean)
     }
     
-    func retur1() {
-        print("max count")
-    }
-
     // delegate for all symbols
     func symbolPressed(_ symbol: String) {
         switch symbol {

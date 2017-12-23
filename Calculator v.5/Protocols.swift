@@ -23,13 +23,13 @@ protocol HistoryProtocol {
 
 
 protocol CalculatorInterface {
-    func digit(_ value: String)
-    func operation(_ operation: Operation)
-    func function(_ function: Function)
-    func utility(_ utility: Utility)
-    func constants(_ constant: Constants)
+    func digit(_ value: String) -> Bool
+    func operation(_ operation: Operation, lastValue: String) -> Bool
+    func function(_ function: Function, lastValue: String) -> Bool
+    func utility(_ utility: Utility, lastValue: String) -> Bool
+    func constants(_ constant: Constants, lastValue: String) -> Bool
     func allClean (_ cleen: Memory)
-    func clear (_ clean: Memory)
+    func clear (_ clean: Memory, equation: String) -> String
     var resultClosure: ((Double?, Error?) -> ())? { get set }
 }
 

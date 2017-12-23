@@ -41,6 +41,5 @@ class OutputResultViewController: UIViewController, OutputInterface {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CheckingTheCorrectInput.outputController2 = self
     }
 }

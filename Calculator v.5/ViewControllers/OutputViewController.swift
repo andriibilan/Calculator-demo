@@ -15,15 +15,6 @@ class OutputViewController: UIViewController {
     var outputInterface: OutputInterface?
     var history: HistoryProtocol?
     
-    func displayResults(value: String) {
-        outputInterface?.cleanLabel()
-        outputInterface?.displayResult(value, operatorPressed: false)
-    }
-    
-    func currentTexTinDisplay() -> String {
-        return (outputInterface?.viewInDisplay())!        
-    }
-    
     func hideHistoryOutput(changeLabel: Bool) {
         if changeLabel == true {
             historyView.isHidden = false
@@ -34,6 +25,27 @@ class OutputViewController: UIViewController {
         }
     }
     
+    func displayResults(value: String) {
+        outputInterface?.cleanLabel()
+        outputInterface?.displayResult(value, operatorPressed: false)
+    }
+    
+    func display(value: String, operatorPressed: Bool) {
+        outputInterface?.displayResult(value, operatorPressed: operatorPressed)
+    }
+    
+    func currentTexTinDisplay() -> String {
+        return (outputInterface?.viewInDisplay())!        
+    }
+    
+    func cleanAll() {
+        outputInterface?.cleanLabel()
+    }
+    
+    func clearLast(value: String) {
+        outputInterface?.clearDisplay(value)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         historyView.isHidden = true
@@ -41,7 +53,7 @@ class OutputViewController: UIViewController {
     
     func getHistoryArray(equation: String, result: String) {
         history?.getHistoryArray(equation: equation, result: result)
-          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,5 +64,5 @@ class OutputViewController: UIViewController {
             history = segue.destination as? OutputHistoryViewController
         }
     }
-
+    
 }
