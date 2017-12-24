@@ -14,7 +14,7 @@ class CalcBrain  {
     private var inputDataArray = [String]()
     private var outputData = [String]()
 
-// getValue get value after all cheking in CheckingTheCorrectInput
+//  get value after all cheking in CheckingTheCorrectInput
     func getValueAfterCheking (getValue : String) {
         self.getValue = getValue
     }

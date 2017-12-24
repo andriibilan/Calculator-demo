@@ -12,6 +12,14 @@ class OutputHistoryViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var tableView: UITableView!
     var historyArray:[String] = []
 
+    func getHistoryArray(equation: String, result: String) {
+        historyArray.append(equation +  "\n" + " = " + result)
+    }
+    func deleteAllHistory() {
+        historyArray.removeAll()
+        tableView.reloadData()
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return historyArray.count
     }
@@ -27,15 +35,7 @@ class OutputHistoryViewController: UIViewController, UITableViewDelegate, UITabl
         cell.accessoryView?.transform = CGAffineTransform (scaleX: 1,y: -1)
         return cell
     }
-    
-    func getHistoryArray(equation: String, result: String) {
-        historyArray.append(equation +  "\n" + " = " + result)
-    }
-    func deleteAllHistory() {
-        historyArray.removeAll()
-        tableView.reloadData()
-    }
-    
+
     @objc func loadList(notification: NSNotification) {
         tableView.reloadData()
     }

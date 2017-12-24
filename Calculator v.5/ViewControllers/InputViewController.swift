@@ -35,8 +35,6 @@ class InputViewController: UIViewController, InputInterface {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-  // make two fuction for one button
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(InputViewController.clear))//Tap function will call when user tap on button
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(InputViewController.allClear)) //Long function will call when user long press on button.
         tapGesture.numberOfTapsRequired = 1
@@ -109,50 +107,7 @@ class InputViewController: UIViewController, InputInterface {
             delegate?.digitPressed(symbol)
         }
     }
-    
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        //        if UIDevice.current.orientation.isPortrait {
-//        //            clearButton.layer.roundCorners(corners: .bottomRight, radius: 10, bounds: clearButton.bounds)
-//        //             operandDot.layer.roundCorners(corners: .bottomLeft, radius: 10, bounds: operandDot.bounds)
-//        //            operandPersent.layer.roundCorners(corners: .topLeft, radius: 10, bounds: operandPersent.bounds)
-//        //            operandDiv.layer.roundCorners(corners: .topRight, radius: 10, bounds: operandDiv.bounds)
-//        //        }
-//        if UIDevice.current.orientation.isPortrait {
-//            print("portrait bounds is: \(clearButton.bounds)")
-//            print("portrait frame is: \(clearButton.frame)")
-//            var x = operandPersent.bounds
-//            clearButton.layer.roundCorners(corners: .bottomRight, radius: 10, bounds: clearButton.bounds)
-//            operandDot.layer.roundCorners(corners: .bottomLeft, radius: 10, bounds: operandDot.bounds)
-//            operandPersent.layer.roundCorners(corners: .topLeft, radius: 10, bounds: x)
-//            //   operandDiv.layer.roundCorners(corners: .topRight, radius: 10, bounds: operandDiv.bounds)
-//        } else {
-//            print("landskape bounds is: \(clearButton.bounds)")
-//            var x = operandPersent.bounds
-//            clearButton.layer.roundCorners(corners: .bottomRight, radius: 10, bounds: clearButton.bounds)
-//            operandDot.layer.roundCorners(corners: .bottomLeft, radius: 10, bounds: operandDot.bounds)
-//            operandPersent.layer.roundCorners(corners: .topLeft, radius: 10, bounds: x)
-//            //  operandDiv.layer.roundCorners(corners: .topRight, radius: 10, bounds: operandDiv.bounds)
-//        }
-//
-//    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-       print(operandDiv) //operandDiv.description
-    }
-    
-    @IBOutlet weak var operandDiv: UIButton!
-//        didSet {
-//            operandDiv.layer.roundCorners(corners: .topRight, radius: 10, bounds: operandDiv.bounds)
-//        }
-    
-    @IBOutlet weak var operandPersent: UIButton!
-    @IBOutlet weak var operandDot: UIButton!
-    @IBOutlet weak var operandOneDiv: UIButton!
-    @IBOutlet weak var operandE: UIButton!
-    
-
-    
+ 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InputViewController {
             destination.delegate = delegate

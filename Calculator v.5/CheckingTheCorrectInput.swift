@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CheckingTheCorrectInput: NSObject, CalculatorInterface {
+class CheckingTheCorrectInput: NSObject, CalculatorInterface { 
     private  var calc = CalcBrain()
     private var equalPressed = false
     private var numberLeftBrackets = 0
