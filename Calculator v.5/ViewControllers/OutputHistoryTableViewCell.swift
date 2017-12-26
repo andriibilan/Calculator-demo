@@ -9,17 +9,9 @@
 import UIKit
 
 class OutputHistoryTableViewCell: UITableViewCell {
-
     @IBOutlet weak var label: UILabel!
-    
-    
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
- 
-
 }

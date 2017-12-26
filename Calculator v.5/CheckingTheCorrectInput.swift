@@ -28,6 +28,7 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     
     // MARK: - Validating for input values
     func digit(_ value: String) -> Bool {
+        equalAfterCleanHistory()
         guard equalPressed == true else {
             return true
         }
@@ -67,11 +68,6 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
                 numberLeftBrackets += 1
                return true
             }
-//            else if !isCheckedForValueType(lastValue) {
-//              //  goodSymbol = Operation.mult.rawValue + Utility.leftBracket.rawValue
-//                numberLeftBrackets += 1
-//            }
-            
         case .rightBracket:
             if lastValue != "" && lastValue != "(" && lastValue != "." && lastValue != "^" && lastValue != "√" && !isCheckedForValueType(lastValue) {
                 numberRightBrackets += 1
@@ -178,6 +174,11 @@ class CheckingTheCorrectInput: NSObject, CalculatorInterface {
     
     var resultClosure: ((Double?, Error?) -> ())?
     
+    func equalAfterCleanHistory() {
+        if UserDefaults.standard.bool(forKey: "clean") == false {
+            equalPressed = false
+        }
+    }
     
 // reset all number of brackets
     func resetAllBrackets() {

@@ -16,6 +16,7 @@ class OutputViewController: UIViewController {
         history?.deleteAllHistory()
         scaleAnimate(button: sender)
         cleanAll()
+        UserDefaults.standard.set(false, forKey: "clean")
     }
     var outputInterface: OutputInterface?
     var history: HistoryProtocol?
